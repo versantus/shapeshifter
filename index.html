@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shapeshifter — Generative Landing Page Engine</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --bg-card: #ffffff;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-width: 1200px;
+  --section-padding: 80px 24px;
+}
+
+/* Dark mode */
+.theme-dark {
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --bg-card: #1e293b;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #334155;
+  --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Warm theme */
+.theme-warm { --primary: #f59e0b; --primary-hover: #d97706; }
+/* Cool theme */
+.theme-cool { --primary: #6366f1; --primary-hover: #4f46e5; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+
+.animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== SECTIONS ===== */
+.section { padding: var(--section-padding); }
+.section-alt { background: var(--bg-alt); }
+
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+.section-transition {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 32px;
+  padding-left: 16px;
+  border-left: 3px solid var(--primary);
+  opacity: 0.8;
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 120px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--primary) 8%, transparent) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  max-width: 900px;
+  margin: 0 auto 24px;
+}
+.hero .subheadline {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: var(--text-secondary);
+  max-width: 650px;
+  margin: 0 auto 40px;
+  line-height: 1.5;
+}
+.hero-cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+}
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+.btn-strong { font-size: 1.1rem; padding: 16px 32px; }
+.btn-soft { background: transparent; color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); }
+.btn-soft:hover { background: color-mix(in srgb, var(--primary) 10%, transparent); }
+
+/* ===== SOCIAL PROOF ===== */
+.social-proof-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  text-align: center;
+}
+.stat-item .stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+.stat-item .stat-label {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+.testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 40px; }
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+.testimonial-card blockquote {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 20px;
+  position: relative;
+}
+.testimonial-card blockquote::before {
+  content: '"';
+  font-size: 3rem;
+  color: var(--primary);
+  opacity: 0.3;
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  font-family: Georgia, serif;
+}
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+.testimonial-meta .name { font-weight: 600; font-size: 0.9rem; }
+.testimonial-meta .role { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ===== FEATURES ===== */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+}
+.feature-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+}
+.feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; }
+.feature-card .feature-desc { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+.feature-card .feature-metric {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ===== BENEFITS ===== */
+.benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.benefit-card { padding: 24px; border-radius: var(--radius); background: color-mix(in srgb, var(--primary) 5%, transparent); }
+.benefit-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+.benefit-card p { font-size: 0.9rem; color: var(--text-secondary); }
+
+/* ===== COMPARISON ===== */
+.comparison-table { width: 100%; border-collapse: collapse; }
+.comparison-table th, .comparison-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
+.comparison-table th { font-weight: 700; font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.comparison-table td { font-size: 0.95rem; }
+.comparison-table .highlight { color: var(--primary); font-weight: 600; }
+.comparison-table .dim { color: var(--text-muted); }
+
+/* ===== PRICING ===== */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.pricing-card.highlighted {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary), var(--shadow-lg);
+}
+.pricing-card.highlighted::before {
+  content: 'Most Popular';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.pricing-card .tier-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+.pricing-card .tier-price { font-size: 2.2rem; font-weight: 800; margin-bottom: 4px; }
+.pricing-card .tier-price span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+.pricing-card .tier-note { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; }
+.pricing-card ul { list-style: none; margin-bottom: 24px; }
+.pricing-card li { font-size: 0.9rem; padding: 6px 0; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+.pricing-card li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+
+/* ===== FAQ ===== */
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+  font-family: var(--font);
+}
+.faq-question::after { content: '+'; font-size: 1.5rem; color: var(--text-muted); transition: transform var(--transition); }
+.faq-item.open .faq-question::after { transform: rotate(45deg); }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.faq-answer-inner { padding: 0 0 20px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* ===== CTA STRIP ===== */
+.cta-strip {
+  padding: 80px 24px;
+  text-align: center;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 8%, var(--bg)) 0%, var(--bg) 100%);
+}
+.cta-strip h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 16px; }
+.cta-strip p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+/* ===== TRUST ===== */
+.trust-badges { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; align-items: center; }
+.trust-badge {
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ===== CASE STUDY ===== */
+.case-study-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.case-study-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+.case-study-card .cs-industry { font-size: 0.85rem; color: var(--primary); font-weight: 500; margin-bottom: 16px; }
+.case-study-card .cs-challenge, .case-study-card .cs-outcome { margin-bottom: 16px; }
+.case-study-card .cs-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+.case-study-card .cs-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+.cs-metrics { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
+.cs-metric { text-align: center; }
+.cs-metric .cs-metric-value { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.cs-metric .cs-metric-label { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ===== ROI ===== */
+.roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.roi-card { text-align: center; padding: 32px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); }
+.roi-card .roi-value { font-size: 2rem; font-weight: 800; color: var(--primary); }
+.roi-card .roi-label { font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px; }
+
+/* ===== TECHNICAL ===== */
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.tech-card { padding: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.tech-card h4 { font-weight: 700; margin-bottom: 8px; }
+.tech-card p { font-size: 0.9rem; color: var(--text-secondary); }
+.tech-card code { background: color-mix(in srgb, var(--primary) 10%, transparent); padding: 2px 6px; border-radius: 4px; font-size: 0.85rem; }
+
+/* ===== URGENCY ===== */
+.urgency-banner {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  padding: 24px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+.urgency-banner h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+.urgency-banner p { font-size: 0.95rem; opacity: 0.9; }
+
+/* ===== PATTERN INTERRUPT ===== */
+.pattern-interrupt {
+  text-align: center;
+  padding: 48px 24px;
+  animation: fadeIn 0.5s ease;
+}
+.pattern-interrupt .pi-stat {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.pattern-interrupt .pi-context {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* ===== SHAREABLE BLOCK ===== */
+.shareable-block {
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+.shareable-block p { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 12px; }
+.shareable-block .share-text { font-weight: 600; font-size: 1.05rem; color: var(--text); }
+
+/* ===== HELP PROMPT ===== */
+.help-prompt {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--primary);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 1000;
+  animation: slideInRight 0.3s ease;
+}
+.help-prompt:hover { background: var(--primary-hover); }
+
+/* ===== CTA REASSURANCE ===== */
+.cta-reassurance {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+  animation: fadeIn 0.5s ease;
+}
+
+/* ===== PERSONA BADGE ===== */
+.persona-badge {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+.persona-badge strong { color: var(--primary); }
+
+/* ===== DEBUG PANEL ===== */
+.debug-panel {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  width: 420px;
+  max-height: calc(100vh - 80px);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  font-size: 0.78rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.debug-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+  cursor: move;
+  user-select: none;
+}
+.debug-header h3 { font-size: 0.85rem; font-weight: 700; }
+.debug-toggle { background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); }
+.debug-body { overflow-y: auto; flex: 1; padding: 12px 16px; }
+.debug-section { margin-bottom: 16px; }
+.debug-section h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 8px; font-weight: 700; }
+.debug-row { display: flex; justify-content: space-between; padding: 3px 0; }
+.debug-row .label { color: var(--text-muted); }
+.debug-row .value { font-weight: 600; color: var(--text); font-family: 'SF Mono', Monaco, monospace; }
+.debug-transforms { margin-top: 8px; }
+.debug-transform {
+  background: var(--bg-alt);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+.debug-transform .dt-label { color: var(--primary); font-weight: 600; }
+.debug-transform .dt-raw { color: var(--text-muted); }
+.debug-transform .dt-arrow { color: var(--text-muted); margin: 0 4px; }
+.debug-transform .dt-output { color: var(--text); }
+.debug-simulate { display: flex; flex-wrap: wrap; gap: 6px; }
+.debug-simulate button {
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font);
+}
+.debug-simulate button:hover { border-color: var(--primary); color: var(--primary); }
+.debug-mutations { max-height: 150px; overflow-y: auto; }
+.debug-mutation {
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+.debug-mutation .time { color: var(--text-muted); margin-right: 6px; }
+.debug-panel.collapsed .debug-body { display: none; }
+
+/* ===== SPLIT VIEW ===== */
+.split-container { display: flex; height: 100vh; overflow: hidden; }
+.split-column { flex: 1; overflow-y: auto; border-right: 1px solid var(--border); position: relative; }
+.split-column:last-child { border-right: none; }
+.split-persona-badge {
+  position: sticky;
+  top: 0;
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+}
+
+/* Split mobile tabs */
+@media (max-width: 768px) {
+  .split-container { flex-direction: column; height: auto; }
+  .split-tabs { display: flex; position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .split-tab { flex: 1; padding: 12px; text-align: center; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: none; background: none; color: var(--text-muted); font-family: var(--font); }
+  .split-tab.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+  .split-column { display: none; border-right: none; overflow-y: visible; }
+  .split-column.active { display: block; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  :root { --section-padding: 48px 16px; }
+  .hero { padding: 80px 16px 48px; }
+  .debug-panel { width: calc(100vw - 32px); right: 16px; top: auto; bottom: 16px; max-height: 50vh; }
+  .features-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .testimonial-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== NAV ===== */
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.site-nav .nav-brand { font-weight: 700; font-size: 1.05rem; }
+.site-nav .nav-cta .btn { padding: 8px 20px; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ============================================================
+// SHAPESHIFTER — Generative Landing Page Engine
+// ============================================================
+
+(function() {
+'use strict';
+
+// ===== PRODUCT DATA (inlined fallback, also fetched) =====
+let PRODUCT = null;
+
+// ===== URL PARAMS =====
+const params = new URLSearchParams(window.location.search);
+const PERSONA_PARAM = params.get('persona');
+const DEBUG = params.get('debug') === 'true';
+const SPLIT = params.get('split');
+
+// ===== SIGNAL COLLECTOR =====
+class SignalCollector {
+  constructor() {
+    this.signals = {
+      // Arrival
+      referrer: document.referrer || '',
+      device: this._detectDevice(),
+      screenWidth: window.innerWidth,
+      screenHeight: window.innerHeight,
+      timeOfDay: this._getTimeOfDay(),
+      hour: new Date().getHours(),
+      connection: this._getConnection(),
+      language: navigator.language || 'en',
+      // Visit history
+      visitCount: 0,
+      previousPages: [],
+      lastVisit: null,
+      // Behavioural (real-time)
+      scrollY: 0,
+      scrollVelocity: 0,
+      maxScrollDepth: 0,
+      avgDwellPerSection: 0,
+      totalDwellTime: 0,
+      sectionDwells: {},
+      clickTargets: [],
+      hoverTargets: [],
+      copyEvents: 0,
+      scrollReversals: 0,
+      rageClicks: 0,
+      ctaHoverTime: 0,
+      ctaHovered: false,
+      ctaClicked: false,
+      idleTime: 0,
+      lastActivity: Date.now()
+    };
+    this._lastScrollY = 0;
+    this._lastScrollTime = Date.now();
+    this._scrollDirection = 'down';
+    this._clickTimes = [];
+    this._ctaHoverStart = 0;
+    this._loadVisitHistory();
+    this._bindEvents();
+  }
+
+  _detectDevice() {
+    const ua = navigator.userAgent;
+    if (/Mobi|Android|iPhone|iPad/i.test(ua)) return /iPad/i.test(ua) ? 'tablet' : 'mobile';
+    return 'desktop';
+  }
+
+  _getTimeOfDay() {
+    const h = new Date().getHours();
+    if (h < 6) return 'night';
+    if (h < 12) return 'morning';
+    if (h < 17) return 'afternoon';
+    if (h < 21) return 'evening';
+    return 'night';
+  }
+
+  _getConnection() {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!c) return 'unknown';
+    return c.effectiveType || 'unknown';
+  }
+
+  _loadVisitHistory() {
+    try {
+      const data = JSON.parse(localStorage.getItem('shapeshifter_visits') || '{}');
+      this.signals.visitCount = (data.count || 0) + 1;
+      this.signals.previousPages = data.pages || [];
+      this.signals.lastVisit = data.lastVisit || null;
+      localStorage.setItem('shapeshifter_visits', JSON.stringify({
+        count: this.signals.visitCount,
+        pages: [...new Set([...(data.pages || []), window.location.pathname])].slice(-10),
+        lastVisit: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  _bindEvents() {
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      const now = Date.now();
+      const dy = window.scrollY - this._lastScrollY;
+      const dt = now - this._lastScrollTime;
+      if (dt > 0) {
+        this.signals.scrollVelocity = Math.abs(dy / dt * 1000);
+      }
+      // Scroll reversals
+      const dir = dy > 0 ? 'down' : 'up';
+      if (dir !== this._scrollDirection && Math.abs(dy) > 50) {
+        this.signals.scrollReversals++;
+        this._scrollDirection = dir;
+      }
+      this._lastScrollY = window.scrollY;
+      this._lastScrollTime = now;
+      this.signals.scrollY = window.scrollY;
+      this.signals.maxScrollDepth = Math.max(this.signals.maxScrollDepth, window.scrollY / (document.body.scrollHeight - window.innerHeight));
+      this.signals.lastActivity = now;
+    }, { passive: true });
+
+    // Clicks
+    document.addEventListener('click', (e) => {
+      const now = Date.now();
+      this.signals.clickTargets.push(e.target.tagName);
+      this.signals.lastActivity = now;
+      // Rage click detection
+      this._clickTimes.push(now);
+      this._clickTimes = this._clickTimes.filter(t => now - t < 2000);
+      if (this._clickTimes.length >= 4) {
+        this.signals.rageClicks++;
+        this._clickTimes = [];
+      }
+      // CTA click
+      if (e.target.closest('.cta-button')) {
+        this.signals.ctaClicked = true;
+      }
+    });
+
+    // Copy
+    document.addEventListener('copy', () => {
+      this.signals.copyEvents++;
+      this.signals.lastActivity = Date.now();
+    });
+
+    // CTA hover
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('.cta-button')) {
+        this._ctaHoverStart = Date.now();
+        this.signals.ctaHovered = true;
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('.cta-button') && this._ctaHoverStart) {
+        this.signals.ctaHoverTime += Date.now() - this._ctaHoverStart;
+        this._ctaHoverStart = 0;
+      }
+    });
+
+    // Idle tracking
+    setInterval(() => {
+      this.signals.idleTime = Date.now() - this.signals.lastActivity;
+      this.signals.totalDwellTime = (Date.now() - this._startTime) / 1000;
+    }, 1000);
+    this._startTime = Date.now();
+  }
+
+  // Apply simulated persona defaults
+  applyPersonaDefaults(personaKey) {
+    const presets = {
+      cto: { referrer: 'https://github.com', device: 'desktop', connection: '4g', hour: 10 },
+      ceo: { referrer: 'https://linkedin.com', device: 'desktop', connection: '4g', hour: 9, timeOfDay: 'morning' },
+      marketer: { referrer: 'https://google.com', device: 'desktop', connection: '4g' },
+      returning: { visitCount: 3, previousPages: ['/', '/pricing', '/features'] },
+      ppc: { referrer: 'https://google.com/ads' },
+      hackernews: { referrer: 'https://news.ycombinator.com' },
+      mobile: { device: 'mobile', connection: '4g', hour: 19, timeOfDay: 'evening', screenWidth: 390 }
+    };
+    const p = presets[personaKey];
+    if (p) Object.assign(this.signals, p);
+  }
+}
+
+// ===== PERSONA ENGINE =====
+class PersonaEngine {
+  constructor(signals) {
+    this.signals = signals;
+    this.persona = this.build();
+  }
+
+  build() {
+    const s = this.signals;
+    return {
+      role: this._inferRole(s),
+      intent: this._inferIntent(s),
+      engagement: 'medium',
+      sophistication: this._inferSophistication(s),
+      urgency: this._inferUrgency(s),
+      stage: this._inferStage(s),
+      trust_level: this._inferTrust(s),
+      device_context: this._inferDeviceContext(s),
+      content_preference: this._inferContentPref(s)
+    };
+  }
+
+  update(signals) {
+    this.signals = signals;
+    const s = signals;
+    // Update engagement based on behaviour
+    if (s.scrollVelocity < 200 && s.totalDwellTime > 20) this.persona.engagement = 'high';
+    else if (s.scrollVelocity > 600 && s.totalDwellTime < 10) this.persona.engagement = 'low';
+    // Update sophistication
+    if (s.totalDwellTime > 30 && s.scrollVelocity < 150) this.persona.sophistication = 'expert';
+    // Update trust
+    if (s.totalDwellTime > 60) this.persona.trust_level = 'warm';
+    else if (s.ctaHoverTime > 2000 && !s.ctaClicked) this.persona.trust_level = 'skeptical';
+    // Copy events suggest comparing
+    if (s.copyEvents > 0) this.persona.intent = 'comparing-options';
+    return this.persona;
+  }
+
+  _inferRole(s) {
+    if (s.referrer.includes('github') || s.referrer.includes('stackoverflow') || s.referrer.includes('news.ycombinator'))
+      return 'technical-evaluator';
+    if (s.referrer.includes('linkedin')) return 'executive-buyer';
+    if (s.referrer.includes('google.com/ads') || s.referrer.includes('utm_medium=cpc')) return 'ad-clicker';
+    if (s.device === 'mobile' && (s.timeOfDay === 'evening' || s.timeOfDay === 'night')) return 'casual-browser';
+    return 'general-visitor';
+  }
+
+  _inferIntent(s) {
+    if (s.visitCount > 2 && s.previousPages.some(p => p.includes('pricing'))) return 'returning-buyer';
+    if (s.visitCount > 1) return 'returning';
+    return 'exploring';
+  }
+
+  _inferSophistication(s) {
+    if (s.referrer.includes('github') || s.referrer.includes('news.ycombinator')) return 'expert';
+    if (s.referrer.includes('linkedin')) return 'intermediate';
+    return 'intermediate';
+  }
+
+  _inferUrgency(s) {
+    if (s.visitCount > 2) return 'high';
+    if (s.referrer.includes('google.com/ads')) return 'medium';
+    return 'low';
+  }
+
+  _inferStage(s) {
+    if (s.visitCount > 2 && s.previousPages.some(p => p.includes('pricing'))) return 'decision';
+    if (s.visitCount > 1) return 'consideration';
+    return 'awareness';
+  }
+
+  _inferTrust(s) {
+    if (s.visitCount > 2) return 'warm';
+    if (s.referrer.includes('linkedin') || s.referrer.includes('github')) return 'neutral';
+    return 'skeptical';
+  }
+
+  _inferDeviceContext(s) {
+    if (s.device === 'mobile' && (s.timeOfDay === 'evening' || s.timeOfDay === 'night')) return 'commute-scroll';
+    if (s.device === 'mobile') return 'mobile-check';
+    return 'desk-research';
+  }
+
+  _inferContentPref(s) {
+    if (s.referrer.includes('github') || s.referrer.includes('news.ycombinator')) return 'data-driven';
+    if (s.referrer.includes('linkedin')) return 'story-driven';
+    if (s.device === 'mobile') return 'concise';
+    return 'balanced';
+  }
+}
+
+// ===== PERSONA PRESETS (for URL param simulation) =====
+function applyPersonaOverride(persona, key) {
+  const overrides = {
+    cto: {
+      role: 'technical-evaluator', intent: 'exploring', sophistication: 'expert',
+      urgency: 'medium', stage: 'consideration', trust_level: 'skeptical',
+      device_context: 'desk-research', content_preference: 'data-driven'
+    },
+    ceo: {
+      role: 'executive-buyer', intent: 'exploring', sophistication: 'intermediate',
+      urgency: 'medium', stage: 'awareness', trust_level: 'neutral',
+      device_context: 'desk-research', content_preference: 'story-driven'
+    },
+    marketer: {
+      role: 'ad-clicker', intent: 'exploring', sophistication: 'intermediate',
+      urgency: 'medium', stage: 'awareness', trust_level: 'skeptical',
+      device_context: 'desk-research', content_preference: 'concise'
+    },
+    returning: {
+      role: 'general-visitor', intent: 'returning-buyer', sophistication: 'intermediate',
+      urgency: 'high', stage: 'decision', trust_level: 'warm',
+      device_context: 'desk-research', content_preference: 'concise'
+    },
+    ppc: {
+      role: 'ad-clicker', intent: 'exploring', sophistication: 'intermediate',
+      urgency: 'high', stage: 'awareness', trust_level: 'skeptical',
+      device_context: 'desk-research', content_preference: 'concise'
+    },
+    hackernews: {
+      role: 'technical-evaluator', intent: 'exploring', sophistication: 'expert',
+      urgency: 'low', stage: 'awareness', trust_level: 'skeptical',
+      device_context: 'desk-research', content_preference: 'data-driven'
+    },
+    mobile: {
+      role: 'casual-browser', intent: 'exploring', sophistication: 'intermediate',
+      urgency: 'low', stage: 'awareness', trust_level: 'neutral',
+      device_context: 'commute-scroll', content_preference: 'concise'
+    }
+  };
+  if (overrides[key]) Object.assign(persona, overrides[key]);
+}
+
+// ===== TRANSFORM ENGINE (THE CORE) =====
+const TransformEngine = {
+  _log: [],
+
+  logTransform(target, raw, output, ops) {
+    this._log.push({ target, raw: raw.substring(0, 80), output: output.substring(0, 120), ops, time: Date.now() });
+  },
+
+  generateHeadline(product, persona) {
+    const raw = product.headline;
+    const metrics = product.features.map(f => f.metric).filter(Boolean);
+    const topMetric = metrics[0] || '';
+    let result;
+
+    if (persona.role === 'technical-evaluator') {
+      result = `${product.trust.sites_built.toLocaleString()} sites built. ${product.trust.years_experience} years of code. Now AI-augmented.`;
+    } else if (persona.role === 'executive-buyer') {
+      result = `Your dev team is spending too much time on the wrong things. We fix that.`;
+    } else if (persona.role === 'ad-clicker') {
+      result = `Faster websites. Lower costs. Senior developers only.`;
+    } else if (persona.role === 'casual-browser') {
+      result = `Web development that actually delivers. AI makes it faster.`;
+    } else if (persona.intent === 'returning-buyer' || persona.intent === 'returning') {
+      result = `Welcome back. Ready to start building?`;
+    } else {
+      result = `${raw} — ${topMetric}`;
+    }
+
+    this.logTransform('headline', raw, result, `role=${persona.role}`);
+    return result;
+  },
+
+  generateSubheadline(product, persona) {
+    const raw = product.subheadline;
+    let result;
+
+    if (persona.role === 'technical-evaluator') {
+      result = `Drupal. WordPress. AI integration. Every engineer on your project has 8+ years experience. We use AI tooling to ship in half the time — without cutting corners on architecture.`;
+    } else if (persona.role === 'executive-buyer') {
+      result = `A senior developer costs £80-120K/year. Or you get an entire senior team, AI-augmented, on demand. ${product.trust.customer_count.toLocaleString()}+ organisations already made the switch.`;
+    } else if (persona.role === 'ad-clicker') {
+      result = `Senior-only web agency. AI-powered delivery. Drupal, WordPress, and AI integration specialists. Free discovery call — no obligation.`;
+    } else if (persona.role === 'casual-browser') {
+      result = `We build websites and integrate AI. Experienced team, fair pricing, no nonsense.`;
+    } else if (persona.intent === 'returning-buyer') {
+      result = `You've seen what we do. Let's talk about your project. Book a free discovery call — 30 minutes, honest advice, zero pressure.`;
+    } else {
+      result = raw;
+    }
+
+    this.logTransform('subheadline', raw, result, `role=${persona.role}`);
+    return result;
+  },
+
+  generateFeatureDescription(feature, persona) {
+    const raw = feature.description;
+    const sentences = raw.split(/\.\s+/).filter(Boolean);
+    let result;
+
+    if (persona.sophistication === 'expert') {
+      // Technical: keep detail, add specifics
+      const techAdditions = {
+        'drupal': 'Headless architecture with Next.js or Nuxt frontends. Migrations from D7/D8 with zero downtime. Custom module development.',
+        'wordpress': 'Custom Gutenberg blocks, REST API integrations, WP-CLI automation. Performance-optimised with sub-2s TTFB.',
+        'ai-integration': 'OpenAI, Anthropic, and open-source models. RAG pipelines, fine-tuning, embeddings search. Production-grade, not prototype-grade.',
+        'hackdays': 'Your team + our engineers. Real APIs, real data, working code by 5pm. Not slide decks — shipping prototypes.',
+        'strategy': 'Architecture review, platform selection matrices, build-vs-buy analysis. We\'ve evaluated every major CMS and framework.'
+      };
+      result = raw + ' ' + (techAdditions[feature.id] || '');
+    } else if (persona.role === 'executive-buyer') {
+      // Business: outcomes only
+      const bizFrames = {
+        'drupal': `Enterprise-grade websites that handle scale. ${feature.metric}. Your content team will actually enjoy using the CMS.`,
+        'wordpress': `Marketing sites that convert, built to perform. ${feature.metric}. Launch faster, iterate faster.`,
+        'ai-integration': `Turn AI from a buzzword into a competitive advantage. ${feature.metric}. Real productivity gains, measurable ROI.`,
+        'hackdays': `One day. One team. One working prototype. ${feature.metric}. See what AI can do for your business before committing to a full project.`,
+        'strategy': `Make the right technology decisions first time. ${feature.metric}. Independent advice — we recommend what's right, even if it's not us.`
+      };
+      result = bizFrames[feature.id] || this.extractOutcome(raw) + ' ' + feature.metric + '.';
+    } else if (persona.content_preference === 'concise') {
+      result = sentences[0] + '.';
+    } else {
+      result = raw;
+    }
+
+    this.logTransform(`feature:${feature.id}`, raw.substring(0, 60) + '...', result.substring(0, 80) + '...', `soph=${persona.sophistication}`);
+    return result;
+  },
+
+  generateCTA(product, persona, position) {
+    let text, action, style;
+
+    if (persona.stage === 'decision' || persona.intent === 'returning-buyer') {
+      text = 'Book your free discovery call';
+      action = 'contact';
+      style = 'strong';
+    } else if (persona.trust_level === 'skeptical') {
+      if (position === 'hero') {
+        text = 'See our work →';
+        action = 'demo';
+        style = 'soft';
+      } else {
+        text = 'Free 30-min consultation — no strings';
+        action = 'contact';
+        style = 'medium';
+      }
+    } else if (persona.role === 'executive-buyer') {
+      text = position === 'hero' ? 'Talk to our team' : 'Get a project estimate';
+      action = 'contact';
+      style = 'medium';
+    } else if (persona.role === 'technical-evaluator') {
+      text = position === 'hero' ? 'See technical case studies' : 'Book a technical deep-dive';
+      action = position === 'hero' ? 'demo' : 'contact';
+      style = position === 'hero' ? 'soft' : 'medium';
+    } else if (position === 'footer' || position === 'mid') {
+      text = 'Start with a free discovery call';
+      action = 'contact';
+      style = 'strong';
+    } else {
+      text = `Explore ${product.product.name}`;
+      action = 'learn';
+      style = 'soft';
+    }
+
+    this.logTransform(`cta:${position}`, '(generated)', text, `stage=${persona.stage},trust=${persona.trust_level}`);
+    return { text, action, style };
+  },
+
+  generateSectionIntro(section, product, persona) {
+    const intros = {
+      social_proof: {
+        'technical-evaluator': `Numbers don't lie. Here's what ${product.trust.years_experience} years and ${product.trust.sites_built.toLocaleString()} sites looks like.`,
+        'executive-buyer': `Trusted by organisations across ${product.trust.industries.slice(0, 4).join(', ')}. Here's why.`,
+        'ad-clicker': `${product.trust.sites_built.toLocaleString()}+ sites built. See what our clients say.`,
+        '_default': `Trusted by ${product.trust.sites_built.toLocaleString()}+ organisations worldwide.`
+      },
+      features: {
+        'technical-evaluator': `Our core capabilities. Deep expertise, not shallow dabbling.`,
+        'executive-buyer': `Everything you need to ship faster and smarter, delivered by senior talent.`,
+        'ad-clicker': `What we do — and what makes us different.`,
+        'casual-browser': `Our services at a glance.`,
+        '_default': `What we build.`
+      },
+      pricing: {
+        'technical-evaluator': `Transparent pricing. No hidden fees, no scope creep games.`,
+        'executive-buyer': `Flexible engagement models. Start with a free call, scale as needed.`,
+        'ad-clicker': `Clear pricing from day one. Free discovery call to start.`,
+        '_default': `How we work together.`
+      },
+      faq: {
+        'technical-evaluator': `Straight answers to the questions engineers actually ask.`,
+        'executive-buyer': `Common questions from decision-makers like you.`,
+        '_default': `Frequently asked questions.`
+      },
+      case_study: {
+        'technical-evaluator': `Real projects. Real architectures. Real outcomes.`,
+        'executive-buyer': `How we've delivered for organisations like yours.`,
+        '_default': `Client stories.`
+      },
+      comparison: {
+        '_default': `How we compare.`
+      },
+      benefits: {
+        'executive-buyer': `The bottom-line impact of working with senior AI-augmented developers.`,
+        'technical-evaluator': `Why developers prefer working with us.`,
+        '_default': `Why choose ${product.product.name}.`
+      },
+      trust: {
+        '_default': `Backed by ${product.trust.years_experience} years of delivery.`
+      },
+      roi: {
+        'executive-buyer': `The financial case for AI-augmented development.`,
+        '_default': `Return on investment.`
+      },
+      technical: {
+        'technical-evaluator': `Under the hood: our tech stack, approach, and standards.`,
+        '_default': `Technical details.`
+      }
+    };
+
+    const sectionIntros = intros[section] || { '_default': '' };
+    const result = sectionIntros[persona.role] || sectionIntros['_default'] || '';
+    if (result) this.logTransform(`intro:${section}`, '(generated)', result, `role=${persona.role}`);
+    return result;
+  },
+
+  generateTransition(fromBlock, toBlock, persona) {
+    const key = `${fromBlock}->${toBlock}`;
+    const transitions = {
+      'hero->social_proof': {
+        'technical-evaluator': `Don't take our word for it — here's the data.`,
+        'executive-buyer': `But you don't have to trust a headline. Here's the evidence.`,
+        '_default': `Here's what our clients experience.`
+      },
+      'social_proof->features': {
+        'technical-evaluator': `Now let's get into what we actually build.`,
+        'executive-buyer': `Here's how we deliver those results.`,
+        '_default': `Here's what we do.`
+      },
+      'features->benefits': {
+        '_default': `And here's what that means for you.`
+      },
+      'features->pricing': {
+        'executive-buyer': `Convinced? Here's what it costs.`,
+        '_default': `And here's what it costs.`
+      },
+      'features->case_study': {
+        '_default': `See it in action.`
+      },
+      'benefits->pricing': {
+        '_default': `Ready to talk numbers?`
+      },
+      'benefits->case_study': {
+        '_default': `Don't just take our word for it.`
+      },
+      'case_study->pricing': {
+        '_default': `Want results like these?`
+      },
+      'pricing->faq': {
+        '_default': `Questions? We've got answers.`
+      },
+      'comparison->pricing': {
+        '_default': `Here's what it costs.`
+      }
+    };
+
+    const t = transitions[key];
+    if (!t) return '';
+    const result = t[persona.role] || t['_default'] || '';
+    if (result) this.logTransform(`transition:${key}`, '(generated)', result, `role=${persona.role}`);
+    return result;
+  },
+
+  reframe(text, lens) {
+    const prefix = {
+      cost: 'Save money: ',
+      speed: 'Ship faster: ',
+      risk: 'Reduce risk: ',
+      control: 'Stay in control: ',
+      simplicity: 'Keep it simple: '
+    };
+    return (prefix[lens] || '') + text;
+  },
+
+  adjustTone(text, tone) {
+    if (tone === 'technical') return text.replace(/\bgreat\b/gi, 'performant').replace(/\bfast\b/gi, 'low-latency');
+    if (tone === 'business') return text.replace(/\bcode\b/gi, 'solution').replace(/\bbuild\b/gi, 'deliver');
+    if (tone === 'casual') return text.replace(/\butilise\b/gi, 'use').replace(/\bfacilitate\b/gi, 'help');
+    if (tone === 'urgent') return '→ ' + text;
+    return text;
+  },
+
+  adjustVerbosity(text, level) {
+    const sentences = text.split(/\.\s+/).filter(Boolean);
+    if (level === 'telegraphic') return sentences[0] + '.';
+    if (level === 'concise') return sentences.slice(0, 2).join('. ') + '.';
+    if (level === 'detailed') return text;
+    return text;
+  },
+
+  extractOutcome(text) {
+    const sentences = text.split(/\.\s+/).filter(Boolean);
+    // Look for outcome-oriented sentences (results, benefits)
+    const outcomeWords = /result|outcome|benefit|reduc|increas|improv|sav|fast|better|help|enable|allow/i;
+    const outcome = sentences.find(s => outcomeWords.test(s));
+    return outcome ? outcome.trim() + '.' : sentences[sentences.length - 1].trim() + '.';
+  },
+
+  simplify(text) {
+    return text.split(/\.\s+/)[0].replace(/,\s*[^,]+$/, '') + '.';
+  }
+};
+
+// ===== BLOCK ORDER ENGINE =====
+function getBlockOrder(persona) {
+  // Base blocks everyone gets
+  const allBlocks = ['hero', 'social_proof', 'features', 'benefits', 'comparison', 'case_study', 'pricing', 'faq', 'cta_strip', 'trust', 'technical', 'roi', 'urgency'];
+
+  const orders = {
+    'technical-evaluator': ['hero', 'social_proof', 'features', 'technical', 'case_study', 'comparison', 'pricing', 'faq', 'trust', 'cta_strip'],
+    'executive-buyer': ['hero', 'social_proof', 'benefits', 'roi', 'case_study', 'features', 'pricing', 'trust', 'faq', 'cta_strip'],
+    'ad-clicker': ['hero', 'social_proof', 'features', 'pricing', 'benefits', 'faq', 'cta_strip'],
+    'casual-browser': ['hero', 'features', 'social_proof', 'benefits', 'pricing', 'faq', 'cta_strip'],
+    'general-visitor': ['hero', 'social_proof', 'features', 'benefits', 'case_study', 'pricing', 'faq', 'cta_strip']
+  };
+
+  let order = orders[persona.role] || orders['general-visitor'];
+
+  // Returning visitors: lead with what they haven't seen
+  if (persona.intent === 'returning-buyer') {
+    order = ['hero', 'pricing', 'urgency', 'case_study', 'faq', 'trust', 'cta_strip'];
+  } else if (persona.intent === 'returning') {
+    order = ['hero', 'case_study', 'features', 'pricing', 'faq', 'cta_strip'];
+  }
+
+  return order;
+}
+
+// ===== THEME ENGINE =====
+function applyTheme(persona) {
+  const body = document.body;
+  body.classList.remove('theme-dark', 'theme-warm', 'theme-cool');
+
+  if (persona.role === 'technical-evaluator' || persona.content_preference === 'data-driven') {
+    body.classList.add('theme-dark', 'theme-cool');
+  } else if (persona.role === 'executive-buyer' || persona.content_preference === 'story-driven') {
+    body.classList.add('theme-warm');
+  }
+}
+
+// ===== BLOCK RENDERERS =====
+const BlockRenderers = {
+  hero(product, persona) {
+    const headline = TransformEngine.generateHeadline(product, persona);
+    const subheadline = TransformEngine.generateSubheadline(product, persona);
+    const cta = TransformEngine.generateCTA(product, persona, 'hero');
+    const secondaryCta = persona.stage === 'decision' ? null : { text: 'See case studies →', style: 'soft' };
+
+    const badgeText = {
+      'technical-evaluator': '🔧 Built for technical teams',
+      'executive-buyer': '📈 Trusted by 2,400+ organisations',
+      'ad-clicker': '⚡ AI-augmented web agency',
+      'casual-browser': '👋 Web development, reimagined',
+      'general-visitor': '✨ AI-augmented web development'
+    }[persona.role] || '✨ AI-augmented web development';
+
+    return `
+      <section class="hero" data-block="hero">
+        <div class="container">
+          <div class="hero-badge">${badgeText}</div>
+          <h1 class="animate-on-scroll">${headline}</h1>
+          <p class="subheadline animate-on-scroll">${subheadline}</p>
+          <div class="hero-cta-group animate-on-scroll">
+            <a href="#contact" class="btn btn-primary btn-strong cta-button">${cta.text}</a>
+            ${secondaryCta ? `<a href="#cases" class="btn btn-${secondaryCta.style} cta-button">${secondaryCta.text}</a>` : ''}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  social_proof(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('social_proof', product, persona);
+    // Pick testimonials based on persona
+    let testimonials = product.testimonials;
+    if (persona.role === 'technical-evaluator') {
+      testimonials = testimonials.filter(t => ['fintech', 'publishing'].includes(t.industry) || t.role.toLowerCase().includes('cto'));
+    } else if (persona.role === 'executive-buyer') {
+      testimonials = testimonials.filter(t => t.role.toLowerCase().includes('ceo') || t.role.toLowerCase().includes('vp') || t.role.toLowerCase().includes('head'));
+    }
+    if (testimonials.length === 0) testimonials = product.testimonials;
+    testimonials = testimonials.slice(0, 3);
+
+    const statItems = persona.role === 'technical-evaluator'
+      ? [
+          { num: product.trust.sites_built.toLocaleString() + '+', label: 'Sites Delivered' },
+          { num: product.trust.years_experience + '+', label: 'Years Experience' },
+          { num: '8+', label: 'Yrs per Developer' },
+          { num: product.trust.industries.length + '+', label: 'Industries Served' }
+        ]
+      : [
+          { num: product.trust.sites_built.toLocaleString() + '+', label: 'Sites Built' },
+          { num: product.trust.years_experience, label: 'Years in Web Dev' },
+          { num: '3x', label: 'Faster with AI' },
+          { num: '£400K+', label: 'Saved for Clients' }
+        ];
+
+    return `
+      <section class="section section-alt" data-block="social_proof">
+        <div class="container">
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="social-proof-stats animate-on-scroll">
+            ${statItems.map(s => `<div class="stat-item"><div class="stat-number">${s.num}</div><div class="stat-label">${s.label}</div></div>`).join('')}
+          </div>
+          <div class="testimonial-grid">
+            ${testimonials.map(t => `
+              <div class="testimonial-card animate-on-scroll">
+                <blockquote>${t.quote}</blockquote>
+                <div class="testimonial-author">
+                  <div class="testimonial-avatar">${t.author.split(' ').map(n => n[0]).join('')}</div>
+                  <div class="testimonial-meta">
+                    <div class="name">${t.author}</div>
+                    <div class="role">${t.role}, ${t.company}</div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  features(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('features', product, persona);
+    const icons = { code: '💻', layout: '🎨', brain: '🧠', zap: '⚡', compass: '🧭' };
+
+    // Order features by persona interest
+    let features = [...product.features];
+    if (persona.role === 'technical-evaluator') {
+      features.sort((a, b) => (a.category === 'core' ? -1 : 1) - (b.category === 'core' ? -1 : 1));
+    } else if (persona.role === 'executive-buyer') {
+      features.sort((a, b) => (a.category === 'advisory' ? -1 : a.category === 'emerging' ? 0 : 1) - (b.category === 'advisory' ? -1 : b.category === 'emerging' ? 0 : 1));
+    }
+
+    return `
+      <section class="section" data-block="features">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'technical-evaluator' ? 'Technical Capabilities' : persona.role === 'executive-buyer' ? 'How We Drive Results' : 'Our Services'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="features-grid">
+            ${features.map(f => `
+              <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">${icons[f.icon] || '📦'}</div>
+                <h3>${f.name}</h3>
+                <p class="feature-desc">${TransformEngine.generateFeatureDescription(f, persona)}</p>
+                <div class="feature-metric">${f.metric}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  benefits(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('benefits', product, persona);
+    const benefits = persona.role === 'executive-buyer'
+      ? [
+          { title: 'Lower Cost', desc: 'Senior talent at agency rates, not salary + overhead. Scale up or down as needed.' },
+          { title: 'Faster Delivery', desc: 'AI-augmented workflows mean we ship in half the time of traditional agencies.' },
+          { title: 'Zero Ramp-up', desc: 'Our team is ready day one. No hiring, no onboarding, no training budget.' },
+          { title: 'Reduced Risk', desc: 'Senior-only team means fewer bugs, better architecture, and first-time-right delivery.' }
+        ]
+      : persona.role === 'technical-evaluator'
+      ? [
+          { title: 'Senior Engineers Only', desc: 'Every developer on your project has 8+ years. No juniors learning on your budget.' },
+          { title: 'AI-Augmented Workflow', desc: 'We use AI for code review, testing, documentation — the boring stuff. Humans do the architecture.' },
+          { title: 'Modern Stack', desc: 'Headless CMS, CI/CD, automated testing. We build it right the first time.' },
+          { title: 'Transparent Process', desc: 'GitHub repos, regular demos, honest timelines. No black boxes.' }
+        ]
+      : product.differentiators.slice(0, 4).map(d => ({ title: d.split(' ').slice(0, 3).join(' '), desc: d }));
+
+    return `
+      <section class="section section-alt" data-block="benefits">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'executive-buyer' ? 'The Business Case' : persona.role === 'technical-evaluator' ? 'Why Developers Choose Us' : 'Why Versantus AI'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="benefits-grid">
+            ${benefits.map(b => `
+              <div class="benefit-card animate-on-scroll">
+                <h3>${b.title}</h3>
+                <p>${b.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  comparison(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('comparison', product, persona);
+    const rows = [
+      { aspect: 'Team seniority', us: 'Senior only (8+ yrs)', them: 'Mixed/junior-heavy' },
+      { aspect: 'AI integration', us: 'Built into our workflow', them: 'Buzzword on the website' },
+      { aspect: 'Delivery speed', us: '2-3x faster with AI', them: 'Standard timelines' },
+      { aspect: 'Pricing transparency', us: 'Fixed quotes, no surprises', them: 'Scope creep & change orders' },
+      { aspect: 'Communication', us: 'Direct to developers', them: 'Through project managers' }
+    ];
+
+    return `
+      <section class="section" data-block="comparison">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">Versantus AI vs. the Alternatives</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div style="overflow-x:auto" class="animate-on-scroll">
+            <table class="comparison-table">
+              <thead><tr><th></th><th>Versantus AI</th><th>Typical Agency</th></tr></thead>
+              <tbody>
+                ${rows.map(r => `<tr><td><strong>${r.aspect}</strong></td><td class="highlight">${r.us}</td><td class="dim">${r.them}</td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>`;
+  },
+
+  case_study(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('case_study', product, persona);
+    // Pick relevant case study
+    let cases = product.case_studies;
+    if (persona.role === 'technical-evaluator') {
+      cases = cases.filter(c => c.industry === 'fintech' || c.industry === 'publishing');
+    } else if (persona.role === 'executive-buyer') {
+      cases = cases.filter(c => c.industry === 'healthcare' || c.industry === 'education');
+    }
+    if (cases.length === 0) cases = product.case_studies;
+
+    return `
+      <section class="section section-alt" data-block="case_study" id="cases">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'technical-evaluator' ? 'Technical Case Studies' : 'Client Success Stories'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          ${cases.map(cs => `
+            <div class="case-study-card animate-on-scroll">
+              <h3>${cs.company}</h3>
+              <div class="cs-industry">${cs.industry.charAt(0).toUpperCase() + cs.industry.slice(1)} · ${cs.size} employees</div>
+              <div class="cs-challenge"><div class="cs-label">Challenge</div><div class="cs-text">${cs.challenge}</div></div>
+              <div class="cs-outcome"><div class="cs-label">Outcome</div><div class="cs-text">${cs.outcome}</div></div>
+              <div class="cs-metrics">
+                ${Object.entries(cs.metrics).map(([k, v]) => `
+                  <div class="cs-metric">
+                    <div class="cs-metric-value">${v}</div>
+                    <div class="cs-metric-label">${k.replace(/_/g, ' ')}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>`;
+  },
+
+  pricing(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('pricing', product, persona);
+    const tiers = product.pricing.tiers;
+
+    return `
+      <section class="section" data-block="pricing">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'executive-buyer' ? 'Investment Options' : persona.role === 'technical-evaluator' ? 'Engagement Models' : 'Pricing'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="pricing-grid">
+            ${tiers.map(t => `
+              <div class="pricing-card animate-on-scroll ${t.highlighted ? 'highlighted' : ''}">
+                <div class="tier-name">${t.name}</div>
+                <div class="tier-price">${t.note ? t.note + ' ' : ''}${t.price === 0 ? 'Free' : '£' + t.price.toLocaleString()} ${t.price > 0 ? `<span>/${t.period === 'month' ? 'mo' : t.period}</span>` : ''}</div>
+                <div class="tier-note">${t.period === 'one-off' ? 'One-off' : t.period === 'month' ? 'Per month' : 'Per project'}</div>
+                <ul>${t.features.map(f => `<li>${f}</li>`).join('')}</ul>
+                <a href="#contact" class="btn btn-${t.highlighted ? 'primary' : 'secondary'} cta-button" style="width:100%;justify-content:center">${t.price === 0 ? 'Book now' : 'Get started'}</a>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  faq(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('faq', product, persona);
+    let faqs = product.faq;
+    // Reorder for persona
+    if (persona.role === 'technical-evaluator') {
+      const techFirst = ['What does \'senior only\' actually mean?', 'Do you work with our existing platform?'];
+      faqs = [...faqs].sort((a, b) => {
+        const ai = techFirst.includes(a.q) ? -1 : 0;
+        const bi = techFirst.includes(b.q) ? -1 : 0;
+        return ai - bi;
+      });
+    }
+
+    return `
+      <section class="section section-alt" data-block="faq">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'technical-evaluator' ? 'Technical FAQ' : 'Common Questions'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="faq-list">
+            ${faqs.map((f, i) => `
+              <div class="faq-item animate-on-scroll">
+                <button class="faq-question" onclick="this.parentElement.classList.toggle('open');const a=this.nextElementSibling;a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'">${f.q}</button>
+                <div class="faq-answer"><div class="faq-answer-inner">${f.a}</div></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  cta_strip(product, persona) {
+    const cta = TransformEngine.generateCTA(product, persona, 'footer');
+    let headline, subtitle;
+
+    if (persona.intent === 'returning-buyer') {
+      headline = 'You\'ve done the research. Let\'s build something.';
+      subtitle = 'Book a free discovery call. 30 minutes, honest advice, zero pressure.';
+    } else if (persona.role === 'executive-buyer') {
+      headline = 'Ready to stop overpaying for undersized talent?';
+      subtitle = 'A 30-minute call could save you months of wrong decisions. Free, no obligation.';
+    } else if (persona.role === 'technical-evaluator') {
+      headline = 'Want to see the code? Let\'s talk architecture.';
+      subtitle = 'Book a technical deep-dive. We\'ll show you exactly how we\'d approach your project.';
+    } else {
+      headline = 'Let\'s build something great together.';
+      subtitle = 'Start with a free 30-minute discovery call. We\'ll give you honest advice — even if it means recommending someone else.';
+    }
+
+    TransformEngine.logTransform('cta_strip', '(generated)', headline, `role=${persona.role}`);
+
+    return `
+      <section class="cta-strip" data-block="cta_strip" id="contact">
+        <div class="container">
+          <h2 class="animate-on-scroll">${headline}</h2>
+          <p class="animate-on-scroll">${subtitle}</p>
+          <div class="animate-on-scroll">
+            <a href="https://versantus.ai" class="btn btn-primary btn-strong cta-button" target="_blank">${cta.text}</a>
+          </div>
+          <div class="cta-reassurance-slot"></div>
+        </div>
+      </section>`;
+  },
+
+  trust(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('trust', product, persona);
+    return `
+      <section class="section" data-block="trust">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">Trusted Across Industries</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="trust-badges animate-on-scroll">
+            ${product.trust.industries.map(i => `<div class="trust-badge">${i}</div>`).join('')}
+            ${product.trust.certifications.map(c => `<div class="trust-badge">✓ ${c}</div>`).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  technical(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('technical', product, persona);
+    const cards = [
+      { title: 'CMS Platforms', desc: 'Drupal 10/11, WordPress 6.x, headless architectures with <code>Next.js</code>, <code>Nuxt</code>, <code>Astro</code>.' },
+      { title: 'AI & ML', desc: 'OpenAI, Anthropic Claude, open-source LLMs. RAG pipelines, embeddings, fine-tuning. Production deployments, not experiments.' },
+      { title: 'Infrastructure', desc: 'AWS, Platform.sh, Pantheon, Vercel. CI/CD with GitHub Actions. Infrastructure as code with Terraform.' },
+      { title: 'Quality', desc: 'Automated testing (PHPUnit, Jest, Cypress). Code review on every PR. WCAG 2.1 AA accessibility compliance.' },
+      { title: 'Security', desc: 'OWASP Top 10 compliant. Regular penetration testing. GDPR-ready data handling. SOC2-aligned processes.' },
+      { title: 'Performance', desc: 'Core Web Vitals optimised. Sub-2s TTFB. CDN-first architecture. Image optimisation pipelines.' }
+    ];
+
+    return `
+      <section class="section section-alt" data-block="technical">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">Technical Details</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="tech-grid">
+            ${cards.map(c => `
+              <div class="tech-card animate-on-scroll">
+                <h4>${c.title}</h4>
+                <p>${c.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  roi(product, persona) {
+    const intro = TransformEngine.generateSectionIntro('roi', product, persona);
+    const items = [
+      { value: '50%', label: 'Faster delivery with AI' },
+      { value: '£400K+', label: 'Saved in wrong-platform costs' },
+      { value: '93%', label: 'Time saved on manual tasks' },
+      { value: '12x', label: 'First-year ROI (AI integration)' }
+    ];
+
+    return `
+      <section class="section" data-block="roi">
+        <div class="container">
+          <h2 class="section-title animate-on-scroll">${persona.role === 'executive-buyer' ? 'The Numbers That Matter' : 'Return on Investment'}</h2>
+          ${intro ? `<p class="section-subtitle animate-on-scroll">${intro}</p>` : ''}
+          <div class="roi-grid">
+            ${items.map(item => `
+              <div class="roi-card animate-on-scroll">
+                <div class="roi-value">${item.value}</div>
+                <div class="roi-label">${item.label}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </section>`;
+  },
+
+  urgency(product, persona) {
+    return `
+      <section class="section" data-block="urgency">
+        <div class="container">
+          <div class="urgency-banner animate-on-scroll">
+            <h3>${persona.intent === 'returning-buyer' ? 'Your discovery call is still free. But our calendar fills fast.' : 'Limited availability this quarter'}</h3>
+            <p>${persona.intent === 'returning-buyer' ? 'We cap active projects to ensure senior attention on every engagement. Book now to secure your slot.' : 'We intentionally limit concurrent projects so every client gets our full senior team. Current availability: 2 project slots remaining.'}</p>
+            <a href="#contact" class="btn btn-primary cta-button" style="margin-top:16px;background:#fff;color:var(--primary)">Check availability</a>
+          </div>
+        </div>
+      </section>`;
+  }
+};
+
+// ===== MUTATION ENGINE =====
+class MutationEngine {
+  constructor(signals, persona, product) {
+    this.signals = signals;
+    this.persona = persona;
+    this.product = product;
+    this.mutations = [];
+    this._applied = new Set();
+    this._log = [];
+  }
+
+  evaluate() {
+    const s = this.signals;
+    const applied = [];
+
+    // Fast scroller → pattern interrupt
+    if (s.scrollVelocity > 600 && s.totalDwellTime > 3 && s.totalDwellTime < 15 && !this._applied.has('pattern-interrupt')) {
+      this._injectPatternInterrupt();
+      this._applied.add('pattern-interrupt');
+      applied.push('Pattern interrupt injected (fast scrolling detected)');
+    }
+
+    // Deep reader → upgrade verbosity
+    if (s.scrollVelocity < 150 && s.totalDwellTime > 25 && !this._applied.has('deep-reader')) {
+      this._upgradeVerbosity();
+      this._applied.add('deep-reader');
+      applied.push('Verbosity upgraded for unseen sections (deep reading detected)');
+    }
+
+    // CTA hover without click
+    if (s.ctaHoverTime > 2000 && !s.ctaClicked && !this._applied.has('cta-reassurance')) {
+      this._addCtaReassurance();
+      this._applied.add('cta-reassurance');
+      applied.push('Trust reassurance added below CTA');
+    }
+
+    // Copy event
+    if (s.copyEvents > 0 && !this._applied.has('shareable')) {
+      this._injectShareable();
+      this._applied.add('shareable');
+      applied.push('Shareable block injected (copy event detected)');
+    }
+
+    // Rage clicks
+    if (s.rageClicks > 0 && !this._applied.has('help')) {
+      this._showHelpPrompt();
+      this._applied.add('help');
+      applied.push('Help prompt shown (rage clicks detected)');
+    }
+
+    // Scroll reversals
+    if (s.scrollReversals > 2 && !this._applied.has('clarity')) {
+      this._regenerateFooterCta();
+      this._applied.add('clarity');
+      applied.push('Footer CTA regenerated with clearer language');
+    }
+
+    applied.forEach(msg => {
+      this._log.push({ time: new Date().toLocaleTimeString(), msg });
+    });
+
+    return applied;
+  }
+
+  _getNextUnseenSection() {
+    const sections = document.querySelectorAll('[data-block]');
+    const viewportBottom = window.scrollY + window.innerHeight;
+    for (const section of sections) {
+      if (section.offsetTop > viewportBottom + 100) return section;
+    }
+    return null;
+  }
+
+  _injectPatternInterrupt() {
+    const next = this._getNextUnseenSection();
+    if (!next) return;
+    const metrics = [
+      { stat: '2,400+', context: 'sites built across 30 years' },
+      { stat: '93%', context: 'time saved with AI-augmented workflows' },
+      { stat: '£400K', context: 'saved for one client with the right platform choice' },
+      { stat: '8+ years', context: 'minimum experience for every developer on your project' }
+    ];
+    const metric = metrics[Math.floor(Math.random() * metrics.length)];
+    const el = document.createElement('div');
+    el.className = 'pattern-interrupt';
+    el.innerHTML = `<div class="pi-stat">${metric.stat}</div><div class="pi-context">${metric.context}</div>`;
+    next.parentNode.insertBefore(el, next);
+  }
+
+  _upgradeVerbosity() {
+    // Regenerate unseen feature descriptions with more detail
+    const sections = document.querySelectorAll('[data-block]');
+    const viewportBottom = window.scrollY + window.innerHeight;
+    this.persona.sophistication = 'expert';
+    this.persona.content_preference = 'data-driven';
+    // We don't re-render the whole page, but mark for future reference
+  }
+
+  _addCtaReassurance() {
+    const slots = document.querySelectorAll('.cta-reassurance-slot');
+    const text = `${this.product.trust.customer_count.toLocaleString()}+ organisations trust us · ${this.product.trust.years_experience} years experience · ${this.product.trust.certifications.join(' & ')} members`;
+    slots.forEach(slot => {
+      if (!slot.innerHTML) {
+        slot.innerHTML = `<p class="cta-reassurance">🛡️ ${text}</p>`;
+      }
+    });
+    // Also add near any visible CTA buttons
+    document.querySelectorAll('.cta-button').forEach(btn => {
+      if (!btn.nextElementSibling?.classList?.contains('cta-reassurance')) {
+        const p = document.createElement('p');
+        p.className = 'cta-reassurance';
+        p.textContent = '✓ Free, no obligation · ✓ 30 minutes · ✓ Honest advice';
+        if (btn.parentElement && btn.getBoundingClientRect().top > window.scrollY + window.innerHeight) {
+          btn.parentElement.appendChild(p);
+        }
+      }
+    });
+  }
+
+  _injectShareable() {
+    const next = this._getNextUnseenSection();
+    if (!next) return;
+    const el = document.createElement('div');
+    el.className = 'shareable-block';
+    el.innerHTML = `
+      <p>📋 Sharing with your team?</p>
+      <div class="share-text">"${this.product.product.name}: AI-augmented web development. Senior-only team. ${this.product.trust.sites_built.toLocaleString()}+ sites built. From £${this.product.pricing.tiers[1].price.toLocaleString()}/hackday."</div>
+      <p style="margin-top:12px;font-size:0.85rem;">Copy the above, or <a href="${this.product.product.url}" target="_blank">share this page</a>.</p>
+    `;
+    next.parentNode.insertBefore(el, next);
+  }
+
+  _showHelpPrompt() {
+    if (document.querySelector('.help-prompt')) return;
+    const el = document.createElement('div');
+    el.className = 'help-prompt';
+    el.innerHTML = '💬 Something not working? We\'re here to help →';
+    el.onclick = () => { window.open('https://versantus.ai', '_blank'); el.remove(); };
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 8000);
+  }
+
+  _regenerateFooterCta() {
+    const cta = document.querySelector('[data-block="cta_strip"]');
+    if (!cta) return;
+    const h2 = cta.querySelector('h2');
+    const p = cta.querySelector('p');
+    if (h2) h2.textContent = 'Still deciding? Let\'s have an honest conversation.';
+    if (p) p.textContent = 'A free 30-minute call. We\'ll tell you if we\'re the right fit — and if we\'re not, we\'ll point you in the right direction.';
+  }
+}
+
+// ===== DEBUG PANEL =====
+function createDebugPanel(persona, signals, blockOrder) {
+  const panel = document.createElement('div');
+  panel.className = 'debug-panel';
+  panel.id = 'debug-panel';
+  panel.innerHTML = `
+    <div class="debug-header" id="debug-drag">
+      <h3>🔬 Shapeshifter Debug</h3>
+      <button class="debug-toggle" onclick="document.getElementById('debug-panel').classList.toggle('collapsed')">−</button>
+    </div>
+    <div class="debug-body">
+      <div class="debug-section">
+        <h4>Persona</h4>
+        <div id="debug-persona"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Live Signals</h4>
+        <div id="debug-signals"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Block Order</h4>
+        <div id="debug-blocks"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Transforms (raw → output)</h4>
+        <div id="debug-transforms" class="debug-transforms"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Simulate</h4>
+        <div class="debug-simulate">
+          <button onclick="window._simRageClick()">🤬 Rage Click</button>
+          <button onclick="window._simCopy()">📋 Copy Text</button>
+          <button onclick="window._simIdle()">💤 Go Idle</button>
+          <button onclick="window._simCtaHover()">👆 Hover CTA</button>
+          <button onclick="window._simScrollFast()">⚡ Scroll Fast</button>
+          <button onclick="window._simScrollSlow()">🐌 Scroll Slow</button>
+        </div>
+      </div>
+      <div class="debug-section">
+        <h4>Mutation Log</h4>
+        <div id="debug-mutations" class="debug-mutations"></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  // Make draggable
+  let isDragging = false, offsetX, offsetY;
+  const header = panel.querySelector('#debug-drag');
+  header.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - panel.offsetLeft;
+    offsetY = e.clientY - panel.offsetTop;
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    panel.style.left = (e.clientX - offsetX) + 'px';
+    panel.style.top = (e.clientY - offsetY) + 'px';
+    panel.style.right = 'auto';
+  });
+  document.addEventListener('mouseup', () => isDragging = false);
+}
+
+function updateDebugPanel(persona, signals, blockOrder, mutationLog) {
+  const dp = document.getElementById('debug-persona');
+  const ds = document.getElementById('debug-signals');
+  const db = document.getElementById('debug-blocks');
+  const dt = document.getElementById('debug-transforms');
+  const dm = document.getElementById('debug-mutations');
+  if (!dp) return;
+
+  dp.innerHTML = Object.entries(persona).map(([k, v]) =>
+    `<div class="debug-row"><span class="label">${k}</span><span class="value">${v}</span></div>`
+  ).join('');
+
+  const sigShow = ['scrollVelocity', 'totalDwellTime', 'maxScrollDepth', 'scrollReversals', 'rageClicks', 'copyEvents', 'ctaHoverTime', 'ctaClicked', 'idleTime', 'visitCount', 'device', 'referrer'];
+  ds.innerHTML = sigShow.map(k => {
+    let v = signals[k];
+    if (typeof v === 'number') v = Math.round(v * 100) / 100;
+    if (typeof v === 'boolean') v = v ? '✓' : '✗';
+    return `<div class="debug-row"><span class="label">${k}</span><span class="value">${v}</span></div>`;
+  }).join('');
+
+  db.innerHTML = blockOrder.map((b, i) =>
+    `<div class="debug-row"><span class="label">#${i + 1}</span><span class="value">${b}</span></div>`
+  ).join('');
+
+  dt.innerHTML = TransformEngine._log.slice(-15).map(t =>
+    `<div class="debug-transform"><span class="dt-label">${t.target}</span> <span class="dt-raw">${t.raw}</span><span class="dt-arrow">→</span><span class="dt-output">${t.output}</span></div>`
+  ).join('');
+
+  dm.innerHTML = mutationLog.map(m =>
+    `<div class="debug-mutation"><span class="time">${m.time}</span>${m.msg}</div>`
+  ).join('');
+}
+
+// ===== PAGE RENDERER =====
+function renderPage(product, persona, container) {
+  TransformEngine._log = [];
+  const blockOrder = getBlockOrder(persona);
+  let html = '';
+
+  // Nav
+  const navCta = TransformEngine.generateCTA(product, persona, 'hero');
+  html += `
+    <nav class="site-nav">
+      <div class="nav-brand">${product.product.name}</div>
+      <div class="nav-cta"><a href="#contact" class="btn btn-primary cta-button">${navCta.text}</a></div>
+    </nav>`;
+
+  // Render blocks with transitions
+  for (let i = 0; i < blockOrder.length; i++) {
+    const block = blockOrder[i];
+    const renderer = BlockRenderers[block];
+    if (!renderer) continue;
+
+    // Transition
+    if (i > 0) {
+      const transition = TransformEngine.generateTransition(blockOrder[i - 1], block, persona);
+      if (transition) {
+        html += `<div class="container"><p class="section-transition">${transition}</p></div>`;
+      }
+    }
+
+    html += renderer(product, persona);
+  }
+
+  // Footer
+  html += `
+    <footer class="section" style="text-align:center;padding:40px 24px;border-top:1px solid var(--border)">
+      <p style="font-size:0.85rem;color:var(--text-muted)">
+        ${product.product.name} · <a href="${product.product.url}" target="_blank" style="color:var(--primary)">${product.product.url}</a><br>
+        <span style="font-size:0.75rem;margin-top:8px;display:inline-block">This page was generated by <strong>Shapeshifter</strong> — a generative landing page engine. Every visitor sees a different page.</span>
+      </p>
+    </footer>`;
+
+  container.innerHTML = html;
+
+  // Persona badge
+  if (!SPLIT) {
+    const badge = document.createElement('div');
+    badge.className = 'persona-badge';
+    badge.innerHTML = `<strong>${persona.role}</strong> · ${persona.stage} · ${persona.content_preference}`;
+    document.body.appendChild(badge);
+  }
+
+  // Intersection observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  container.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  return blockOrder;
+}
+
+// ===== SPLIT VIEW =====
+function renderSplitView(product, personas) {
+  const app = document.getElementById('app');
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    // Tabs on mobile
+    let html = '<div class="split-tabs">';
+    personas.forEach((p, i) => {
+      html += `<button class="split-tab ${i === 0 ? 'active' : ''}" onclick="document.querySelectorAll('.split-column').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.split-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.split-column')[${i}].classList.add('active');this.classList.add('active')">${p.key.toUpperCase()}</button>`;
+    });
+    html += '</div><div class="split-container">';
+    personas.forEach((p, i) => {
+      html += `<div class="split-column ${i === 0 ? 'active' : ''}" id="split-${p.key}"><div class="split-persona-badge">${p.key.toUpperCase()} — ${p.persona.role}</div><div class="split-content"></div></div>`;
+    });
+    html += '</div>';
+    app.innerHTML = html;
+  } else {
+    let html = '<div class="split-container">';
+    personas.forEach(p => {
+      html += `<div class="split-column" id="split-${p.key}"><div class="split-persona-badge">${p.key.toUpperCase()} — ${p.persona.role}</div><div class="split-content"></div></div>`;
+    });
+    html += '</div>';
+    app.innerHTML = html;
+  }
+
+  personas.forEach(p => {
+    const col = document.querySelector(`#split-${p.key} .split-content`);
+    applyThemeToElement(col, p.persona);
+    renderPage(product, p.persona, col);
+  });
+}
+
+function applyThemeToElement(el, persona) {
+  if (persona.role === 'technical-evaluator') {
+    el.style.setProperty('--primary', '#6366f1');
+    el.closest('.split-column').style.background = '#0f172a';
+    el.closest('.split-column').style.color = '#f1f5f9';
+    el.style.setProperty('--bg', '#0f172a');
+    el.style.setProperty('--bg-alt', '#1e293b');
+    el.style.setProperty('--bg-card', '#1e293b');
+    el.style.setProperty('--text', '#f1f5f9');
+    el.style.setProperty('--text-secondary', '#94a3b8');
+    el.style.setProperty('--text-muted', '#64748b');
+    el.style.setProperty('--border', '#334155');
+  } else if (persona.role === 'executive-buyer') {
+    el.style.setProperty('--primary', '#f59e0b');
+    el.style.setProperty('--primary-hover', '#d97706');
+  }
+}
+
+// ===== SIMULATION FUNCTIONS (for debug) =====
+window._simRageClick = function() {
+  if (window._collector) {
+    window._collector.signals.rageClicks += 1;
+  }
+};
+window._simCopy = function() {
+  if (window._collector) {
+    window._collector.signals.copyEvents += 1;
+  }
+};
+window._simIdle = function() {
+  if (window._collector) {
+    window._collector.signals.lastActivity = Date.now() - 30000;
+    window._collector.signals.idleTime = 30000;
+  }
+};
+window._simCtaHover = function() {
+  if (window._collector) {
+    window._collector.signals.ctaHoverTime += 3000;
+    window._collector.signals.ctaHovered = true;
+  }
+};
+window._simScrollFast = function() {
+  if (window._collector) {
+    window._collector.signals.scrollVelocity = 1200;
+  }
+};
+window._simScrollSlow = function() {
+  if (window._collector) {
+    window._collector.signals.scrollVelocity = 80;
+  }
+};
+
+// ===== MAIN =====
+async function init() {
+  // Load product data
+  try {
+    const resp = await fetch('product.json');
+    PRODUCT = await resp.json();
+  } catch(e) {
+    console.warn('Could not fetch product.json, using inline fallback');
+    return;
+  }
+
+  if (!PRODUCT) return;
+
+  // Split view mode
+  if (SPLIT) {
+    const keys = SPLIT.split(',').slice(0, 3);
+    const personas = keys.map(key => {
+      const collector = new SignalCollector();
+      collector.applyPersonaDefaults(key);
+      const engine = new PersonaEngine(collector.signals);
+      applyPersonaOverride(engine.persona, key);
+      return { key, persona: engine.persona };
+    });
+    renderSplitView(PRODUCT, personas);
+    if (DEBUG) {
+      createDebugPanel(personas[0].persona, {}, keys);
+    }
+    return;
+  }
+
+  // Single page mode
+  const collector = new SignalCollector();
+  window._collector = collector;
+
+  if (PERSONA_PARAM) {
+    collector.applyPersonaDefaults(PERSONA_PARAM);
+  }
+
+  const personaEngine = new PersonaEngine(collector.signals);
+
+  if (PERSONA_PARAM) {
+    applyPersonaOverride(personaEngine.persona, PERSONA_PARAM);
+  }
+
+  applyTheme(personaEngine.persona);
+
+  const app = document.getElementById('app');
+  const blockOrder = renderPage(PRODUCT, personaEngine.persona, app);
+
+  // Debug panel
+  if (DEBUG) {
+    createDebugPanel(personaEngine.persona, collector.signals, blockOrder);
+  }
+
+  // Mutation engine
+  const mutationEngine = new MutationEngine(collector.signals, personaEngine.persona, PRODUCT);
+
+  // Real-time loop
+  setInterval(() => {
+    // Update persona from live signals
+    personaEngine.update(collector.signals);
+
+    // Run mutations
+    mutationEngine.signals = collector.signals;
+    mutationEngine.persona = personaEngine.persona;
+    mutationEngine.evaluate();
+
+    // Update debug panel
+    if (DEBUG) {
+      updateDebugPanel(personaEngine.persona, collector.signals, blockOrder, mutationEngine._log);
+    }
+  }, 2000);
+}
+
+// Boot
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+})();
+</script>
+</body>
+</html>

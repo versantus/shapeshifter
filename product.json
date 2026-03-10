@@ -1,0 +1,228 @@
+{
+  "product": {
+    "name": "Versantus AI",
+    "tagline": "AI-augmented web development. Senior talent. Faster delivery.",
+    "url": "https://versantus.ai",
+    "category": "web-agency"
+  },
+
+  "brand": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#1e293b",
+    "fonts": { "heading": "Inter", "body": "Inter" },
+    "logo": null,
+    "tone": "professional-but-human",
+    "values": ["craftsmanship", "speed", "intelligence", "transparency"]
+  },
+
+  "headline": "Web development, augmented by AI",
+  "subheadline": "30 years of web expertise combined with AI-powered delivery. Senior developers only. No juniors on your project, ever.",
+
+  "features": [
+    {
+      "id": "drupal",
+      "name": "Drupal Development",
+      "description": "Enterprise Drupal builds, migrations, and ongoing support. Complex content architectures, multi-site setups, headless Drupal with decoupled frontends. We've built Drupal sites for Oxford colleges, healthcare providers, and fintech platforms.",
+      "metric": "800+ Drupal sites delivered",
+      "icon": "code",
+      "category": "core"
+    },
+    {
+      "id": "wordpress",
+      "name": "WordPress Development",
+      "description": "Custom WordPress themes, plugins, and WooCommerce builds. Performance-optimised, accessibility-compliant, built to scale. From marketing sites to complex membership platforms.",
+      "metric": "1,600+ WordPress sites built",
+      "icon": "layout",
+      "category": "core"
+    },
+    {
+      "id": "ai-integration",
+      "name": "AI Integration",
+      "description": "We integrate AI into your existing workflows and products. Content generation pipelines, intelligent search, automated tagging, chatbots, recommendation engines. Practical AI that solves real problems, not science projects.",
+      "metric": "3x productivity gains for clients",
+      "icon": "brain",
+      "category": "emerging"
+    },
+    {
+      "id": "hackdays",
+      "name": "AI Hackdays",
+      "description": "One-day intensive workshops where your team explores AI possibilities with our engineers. Walk in with questions, walk out with working prototypes. We've run hackdays for publishers, universities, and financial services firms.",
+      "metric": "Prototypes in 8 hours",
+      "icon": "zap",
+      "category": "emerging"
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy & Consulting",
+      "description": "Technical strategy, platform selection, architecture review, and digital transformation consulting. We help you make the right technology decisions before writing a line of code. CTO-as-a-service for organisations that need senior technical leadership.",
+      "metric": "Saved clients £2M+ in wrong-platform costs",
+      "icon": "compass",
+      "category": "advisory"
+    }
+  ],
+
+  "testimonials": [
+    {
+      "id": "t1",
+      "quote": "Versantus rebuilt our entire college website in half the time our previous agency quoted. The Drupal architecture they designed handles 50,000 prospective student visits during clearing without breaking a sweat.",
+      "author": "Dr. Eleanor Whitfield",
+      "role": "Digital Communications Director",
+      "company": "St. Catherine's College, Oxford",
+      "industry": "education",
+      "metric": "50% faster delivery"
+    },
+    {
+      "id": "t2",
+      "quote": "Their AI hackday changed how our editorial team thinks about content. We went from spending 4 hours on metadata tagging to 15 minutes. The prototype they built in one day became a production tool within a month.",
+      "author": "James Harrington",
+      "role": "Head of Digital",
+      "company": "Meridian Publishing",
+      "industry": "publishing",
+      "metric": "93% time saved on tagging"
+    },
+    {
+      "id": "t3",
+      "quote": "We needed a CTO-level perspective without hiring a CTO. Versantus came in, audited our stack, and saved us from a £400K platform migration that would have been the wrong call. Worth every penny of the consulting fee.",
+      "author": "Sarah Okonkwo",
+      "role": "CEO",
+      "company": "HealthBridge Digital",
+      "industry": "healthcare",
+      "metric": "£400K saved"
+    },
+    {
+      "id": "t4",
+      "quote": "The difference is that every person on the project is a senior developer. No handoffs to juniors, no quality drops mid-project. Our compliance portal was built to spec, on time, and passed security audit first time.",
+      "author": "Marcus Chen",
+      "role": "CTO",
+      "company": "Aldgate Financial",
+      "industry": "fintech",
+      "metric": "First-time security audit pass"
+    },
+    {
+      "id": "t5",
+      "quote": "We've worked with agencies who talk about AI. Versantus actually builds with it. They integrated GPT into our customer support workflow and cut first-response time from 2 hours to 8 minutes.",
+      "author": "Priya Sharma",
+      "role": "VP Operations",
+      "company": "NexaRetail",
+      "industry": "retail",
+      "metric": "93% faster response time"
+    }
+  ],
+
+  "case_studies": [
+    {
+      "id": "cs1",
+      "company": "St. Catherine's College, Oxford",
+      "industry": "education",
+      "size": "50-200",
+      "challenge": "Ageing website couldn't handle clearing traffic. Content editors found the CMS unusable. Mobile experience was broken.",
+      "outcome": "Modern Drupal 10 build with intuitive editing experience. Handles 50K concurrent users. Mobile-first responsive design. Delivered in 12 weeks.",
+      "metrics": { "delivery_time": "-50%", "traffic_capacity": "+500%", "editor_satisfaction": "95%" }
+    },
+    {
+      "id": "cs2",
+      "company": "Aldgate Financial",
+      "industry": "fintech",
+      "size": "200-500",
+      "challenge": "Compliance portal needed rebuilding to meet new FCA regulations. Previous agency missed deadline twice. Security requirements were non-negotiable.",
+      "outcome": "Custom WordPress platform with role-based access, audit logging, and automated compliance reporting. Passed penetration testing first attempt. Delivered 2 weeks early.",
+      "metrics": { "delivery": "2 weeks early", "security_audits_passed": "100%", "compliance_coverage": "100%" }
+    },
+    {
+      "id": "cs3",
+      "company": "Meridian Publishing",
+      "industry": "publishing",
+      "size": "100-300",
+      "challenge": "Editorial team spending 30+ hours per week on manual content tagging and metadata. Wanted to explore AI but didn't know where to start.",
+      "outcome": "AI hackday produced working prototype. Production tool deployed within 30 days. Automated 93% of tagging workflow. Editorial team refocused on high-value content creation.",
+      "metrics": { "time_saved": "93%", "prototype_to_production": "30 days", "roi": "12x in year one" }
+    }
+  ],
+
+  "pricing": {
+    "model": "service-based",
+    "currency": "GBP",
+    "tiers": [
+      {
+        "name": "Discovery Call",
+        "price": 0,
+        "period": "one-off",
+        "features": ["30-minute video call", "Understand your challenges", "Honest recommendation", "No obligation"],
+        "highlighted": false
+      },
+      {
+        "name": "AI Hackday",
+        "price": 2000,
+        "period": "one-off",
+        "features": ["Full-day intensive workshop", "Senior AI engineers", "Working prototype by end of day", "Follow-up report with recommendations", "Up to 10 participants"],
+        "highlighted": true
+      },
+      {
+        "name": "Retainer",
+        "price": 3000,
+        "period": "month",
+        "features": ["Dedicated senior developer time", "Ongoing support & development", "Priority response", "Monthly strategy review", "Flexible hours allocation"],
+        "highlighted": false,
+        "note": "from"
+      },
+      {
+        "name": "Project",
+        "price": 10000,
+        "period": "project",
+        "features": ["Fixed scope & timeline", "Senior team throughout", "Architecture & code review included", "Post-launch support period", "Full documentation & handover"],
+        "highlighted": false,
+        "note": "from"
+      }
+    ]
+  },
+
+  "competitors": ["Generic agencies", "Offshore teams", "Freelancers", "In-house hires"],
+
+  "differentiators": [
+    "AI-augmented delivery means faster turnaround and lower cost without sacrificing quality",
+    "Senior developers only — no juniors, no handoffs, no quality drops mid-project",
+    "30 years of web development experience across 2,400+ sites",
+    "We build with AI, not just talk about it — practical integration, not science projects",
+    "Transparent pricing, honest recommendations — we'll tell you if you don't need us"
+  ],
+
+  "trust": {
+    "customer_count": 2400,
+    "years_experience": 30,
+    "uptime": "99.9%",
+    "sites_built": 2400,
+    "certifications": ["Drupal Association", "WordPress VIP"],
+    "industries": ["Education", "Fintech", "Healthcare", "Publishing", "Retail", "Government"]
+  },
+
+  "faq": [
+    {
+      "q": "How is AI-augmented delivery different from just using ChatGPT?",
+      "a": "We've built custom AI pipelines integrated into our development workflow — automated testing, intelligent code review, content generation, and project management. It's not about pasting code from ChatGPT. It's about systematically using AI at every stage to deliver faster without cutting corners."
+    },
+    {
+      "q": "What does 'senior only' actually mean?",
+      "a": "Every person who touches your project has 8+ years of professional experience. No graduates learning on your budget. No offshore handoffs at midnight. The person in your kickoff meeting is the person writing your code."
+    },
+    {
+      "q": "How long does a typical project take?",
+      "a": "A marketing site: 4-8 weeks. A complex web application: 8-16 weeks. An AI integration: 2-6 weeks. We'll give you a realistic timeline in our discovery call — and we stick to it."
+    },
+    {
+      "q": "Do you work with our existing platform?",
+      "a": "Yes. We specialise in Drupal and WordPress but work across the web stack. We can extend, migrate, or rebuild — whatever makes sense. We'll always recommend the right platform, even if it's not one we specialise in."
+    },
+    {
+      "q": "What happens after launch?",
+      "a": "We offer ongoing retainer support for maintenance, updates, and continuous improvement. Or we do a clean handover with full documentation. Your choice — no lock-in."
+    },
+    {
+      "q": "Can you help us figure out what we need?",
+      "a": "Absolutely. That's what the free discovery call is for. And if you need deeper exploration, our strategy consulting or AI hackday formats are designed to answer exactly that question."
+    },
+    {
+      "q": "Why not just hire in-house?",
+      "a": "A senior developer costs £80-120K/year plus benefits, management overhead, and ramp-up time. With us, you get senior talent immediately, scale up or down as needed, and pay only for what you use. Plus you get a team, not a single point of failure."
+    }
+  ]
+}
