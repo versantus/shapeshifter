@@ -4,6 +4,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shapeshifter — Generative Landing Page Engine</title>
+<script>
+(function(){
+  var PASS_HASH = 'f10dbcd5bfbc492365dd9aa4e8f54ac22a065fa3b52fc85d872cf21a0eb9812b';
+  if(sessionStorage.getItem('ss_auth')==='1') return;
+  async function sha256(msg){
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+    return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+  }
+  var overlay=document.createElement('div');
+  overlay.id='auth-gate';
+  overlay.innerHTML='<div style="position:fixed;inset:0;z-index:99999;background:#0f172a;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,Inter,system-ui,sans-serif">'
+    +'<div style="text-align:center;color:#f1f5f9;max-width:360px;padding:24px">'
+    +'<div style="font-size:32px;margin-bottom:8px">🔮</div>'
+    +'<h1 style="font-size:22px;font-weight:700;margin-bottom:4px">Shapeshifter</h1>'
+    +'<p style="color:#94a3b8;font-size:14px;margin-bottom:24px">This demo is password protected</p>'
+    +'<input id="ss-pass" type="password" placeholder="Enter password" autocomplete="off" style="width:100%;padding:12px 16px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;font-size:15px;outline:none;margin-bottom:12px;text-align:center">'
+    +'<button id="ss-go" style="width:100%;padding:12px;border-radius:8px;border:none;background:#6366f1;color:#fff;font-size:15px;font-weight:600;cursor:pointer">Enter</button>'
+    +'<p id="ss-err" style="color:#ef4444;font-size:13px;margin-top:12px;display:none">Wrong password</p>'
+    +'</div></div>';
+  document.addEventListener('DOMContentLoaded',function(){
+    document.body.appendChild(overlay);
+    var inp=document.getElementById('ss-pass'),btn=document.getElementById('ss-go'),err=document.getElementById('ss-err');
+    async function tryAuth(){
+      var h=await sha256(inp.value);
+      if(h===PASS_HASH){sessionStorage.setItem('ss_auth','1');overlay.remove();}
+      else{err.style.display='block';inp.value='';inp.focus();}
+    }
+    btn.onclick=tryAuth;
+    inp.onkeydown=function(e){if(e.key==='Enter')tryAuth()};
+    inp.focus();
+  });
+})();
+</script>
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
