@@ -11,18 +11,18 @@
     "email": "hello@versantus.co.uk",
     "address": "Frieze Farmhouse, Woodstock Road, Oxford, OX2 8JX"
   },
-
   "headline": "We build experiences that matter",
   "subheadline": "A UK-based agency that puts people first — solving real problems, unlocking business potential, and putting smiles on customers' faces since 1996.",
-
   "brand": {
     "primaryColor": "#e63946",
     "secondaryColor": "#1d3557",
-    "fonts": { "heading": "Inter", "body": "Inter" },
+    "fonts": {
+      "heading": "Inter",
+      "body": "Inter"
+    },
     "logo": "https://www.versantus.co.uk/themes/custom/versantus/logo.svg",
     "tone": "professional-but-human"
   },
-
   "features": [
     {
       "title": "Strategy & Consultation",
@@ -61,7 +61,6 @@
       "icon": "🤖"
     }
   ],
-
   "sectors": [
     "Higher education",
     "Care industry",
@@ -72,9 +71,12 @@
     "Ambitious startups",
     "Membership organisations"
   ],
-
-  "tech": ["Drupal", "WordPress", "Drupal Commerce", "Acquia Products"],
-
+  "tech": [
+    "Drupal",
+    "WordPress",
+    "Drupal Commerce",
+    "Acquia Products"
+  ],
   "pricing": {
     "tiers": [
       {
@@ -82,7 +84,12 @@
         "price": 500,
         "period": "month",
         "description": "Ongoing maintenance, security updates, hosting and continuous improvement",
-        "features": ["Security updates", "Performance monitoring", "Content support", "Drupal/WP maintenance"],
+        "features": [
+          "Security updates",
+          "Performance monitoring",
+          "Content support",
+          "Drupal/WP maintenance"
+        ],
         "cta": "Get in touch"
       },
       {
@@ -90,7 +97,12 @@
         "price": 900,
         "period": "day",
         "description": "A full day with our senior team focused on your biggest challenge",
-        "features": ["Senior-only team", "Strategy + development", "AI-augmented delivery", "Same-day outcomes"],
+        "features": [
+          "Senior-only team",
+          "Strategy + development",
+          "AI-augmented delivery",
+          "Same-day outcomes"
+        ],
         "cta": "Book a hackday",
         "popular": true
       },
@@ -99,7 +111,12 @@
         "price": 15000,
         "period": "project",
         "description": "Full discovery, design and build for websites, apps and digital platforms",
-        "features": ["Discovery & strategy", "UX design & build", "Integrations", "Launch & support"],
+        "features": [
+          "Discovery & strategy",
+          "UX design & build",
+          "Integrations",
+          "Launch & support"
+        ],
         "cta": "Start a project"
       },
       {
@@ -107,12 +124,16 @@
         "price": 3000,
         "period": "month",
         "description": "Embedded in your team — strategy, development and marketing on demand",
-        "features": ["Dedicated team", "Weekly syncs", "Roadmap planning", "Priority support"],
+        "features": [
+          "Dedicated team",
+          "Weekly syncs",
+          "Roadmap planning",
+          "Priority support"
+        ],
         "cta": "Become a partner"
       }
     ]
   },
-
   "case_studies": [
     {
       "id": "rcpe",
@@ -175,7 +196,6 @@
       "tech": "Drupal, Google Ads, SEO, Facebook Ads"
     }
   ],
-
   "testimonials": [
     {
       "quote": "Thank you!! The website is great isn't it? Your team has been absolutely fabulous. It's going well and we've had some great feedback.",
@@ -219,7 +239,6 @@
       "company": "Guides for Brides"
     }
   ],
-
   "trust": {
     "sites_built": 200,
     "years_experience": 30,
@@ -234,8 +253,13 @@
       "Ambitious startups",
       "Membership organisations"
     ],
-    "certifications": ["Acquia Partner", "Drupal Association"],
-    "partners": ["Acquia"],
+    "certifications": [
+      "Acquia Partner",
+      "Drupal Association"
+    ],
+    "partners": [
+      "Acquia"
+    ],
     "location": "Oxford, UK",
     "since": "1996",
     "metrics": {
@@ -247,7 +271,6 @@
       "session_duration_increase_rcpe": "2x"
     }
   },
-
   "faq": [
     {
       "q": "What CMS platforms do you work with?",
@@ -277,5 +300,13 @@
       "q": "Can you work alongside our existing team?",
       "a": "Absolutely. We regularly augment in-house teams with specialist skills — scaling up and down as needed without the cost of permanent hires."
     }
+  ],
+  "differentiators": [
+    "Specialist Drupal and WordPress agency with 30 years experience in web development",
+    "AI-augmented workflows — image categorisation, content management, rapid prototyping and SEO",
+    "Senior-only team covering strategy, design, development, marketing and support under one roof",
+    "Trusted by organisations across higher education, care, charity, luxury and membership sectors",
+    "Flexible engagement — from one-off hackdays to retained partnerships, scaling as you need",
+    "Oxford-based team that combines technical excellence with genuine care for user experience"
   ]
 }
