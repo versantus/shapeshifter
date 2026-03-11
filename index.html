@@ -1298,9 +1298,9 @@ const BlockRenderers = {
     // Pick testimonials based on persona
     let testimonials = product.testimonials;
     if (persona.role === 'technical-evaluator') {
-      testimonials = testimonials.filter(t => ['fintech', 'publishing'].includes(t.industry) || t.role.toLowerCase().includes('cto'));
+      testimonials = testimonials.filter(t => t.company === 'RCPE' || (t.role && (t.role || '').toLowerCase().includes('digital')));
     } else if (persona.role === 'executive-buyer') {
-      testimonials = testimonials.filter(t => t.role.toLowerCase().includes('ceo') || t.role.toLowerCase().includes('vp') || t.role.toLowerCase().includes('head'));
+      testimonials = testimonials.filter(t => (t.role || '').toLowerCase().includes('ceo') || (t.role || '').toLowerCase().includes('vp') || (t.role || '').toLowerCase().includes('head'));
     }
     if (testimonials.length === 0) testimonials = product.testimonials;
     testimonials = testimonials.slice(0, 3);
@@ -1334,7 +1334,7 @@ const BlockRenderers = {
                   <div class="testimonial-avatar">${t.author.split(' ').map(n => n[0]).join('')}</div>
                   <div class="testimonial-meta">
                     <div class="name">${t.author}</div>
-                    <div class="role">${t.role}, ${t.company}</div>
+                    <div class="role">${t.role ? t.role + ", " : ""}${t.company}</div>
                   </div>
                 </div>
               </div>
@@ -1364,8 +1364,8 @@ const BlockRenderers = {
           <div class="features-grid">
             ${features.map(f => `
               <div class="feature-card animate-on-scroll">
-                <div class="feature-icon">${icons[f.icon] || '📦'}</div>
-                <h3>${f.name}</h3>
+                <div class="feature-icon">${f.icon || icons[f.icon] || '📦'}</div>
+                <h3>${f.title || f.name}</h3>
                 <p class="feature-desc">${TransformEngine.generateFeatureDescription(f, persona)}</p>
                 <div class="feature-metric">${f.metric}</div>
               </div>
@@ -1442,9 +1442,9 @@ const BlockRenderers = {
     // Pick relevant case study
     let cases = product.case_studies;
     if (persona.role === 'technical-evaluator') {
-      cases = cases.filter(c => c.industry === 'fintech' || c.industry === 'publishing');
+      cases = cases.filter(c => c.sector.includes('education') || c.sector.includes('Membership'));
     } else if (persona.role === 'executive-buyer') {
-      cases = cases.filter(c => c.industry === 'healthcare' || c.industry === 'education');
+      cases = cases.filter(c => c.sector.includes('Care') || c.sector.includes('education'));
     }
     if (cases.length === 0) cases = product.case_studies;
 
@@ -1456,17 +1456,10 @@ const BlockRenderers = {
           ${cases.map(cs => `
             <div class="case-study-card animate-on-scroll">
               <h3>${cs.company}</h3>
-              <div class="cs-industry">${cs.industry.charAt(0).toUpperCase() + cs.industry.slice(1)} · ${cs.size} employees</div>
+              <div class="cs-industry">${cs.sector}</div>
               <div class="cs-challenge"><div class="cs-label">Challenge</div><div class="cs-text">${cs.challenge}</div></div>
-              <div class="cs-outcome"><div class="cs-label">Outcome</div><div class="cs-text">${cs.outcome}</div></div>
-              <div class="cs-metrics">
-                ${Object.entries(cs.metrics).map(([k, v]) => `
-                  <div class="cs-metric">
-                    <div class="cs-metric-value">${v}</div>
-                    <div class="cs-metric-label">${k.replace(/_/g, ' ')}</div>
-                  </div>
-                `).join('')}
-              </div>
+              <div class="cs-outcome"><div class="cs-label">Outcome</div><div class="cs-text">${cs.results}</div></div>
+              ${cs.quote ? `<div class="cs-quote">"${cs.quote}" — <em>${cs.quote_author}</em></div>` : ''}
             </div>
           `).join('')}
         </div>

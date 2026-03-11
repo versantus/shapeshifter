@@ -28,37 +28,49 @@
       "title": "Strategy & Consultation",
       "description": "AI consultation, discovery sprints, digital roadmaps, audience research and prototype development. We help you figure out what to build before you build it.",
       "metric": "183% enquiry increase for Guides for Brides",
-      "icon": "🧭"
+      "icon": "🧭",
+      "id": "strategy",
+      "name": "Strategy & Consultation"
     },
     {
       "title": "Development",
       "description": "Website development, e-commerce, mobile apps, migrations and web applications. Drupal specialists with WordPress and Acquia expertise.",
       "metric": "Lighthouse targets of 90+ on key pages",
-      "icon": "⚙️"
+      "icon": "⚙️",
+      "id": "drupal",
+      "name": "Development"
     },
     {
       "title": "Design & UX",
       "description": "Wireframing, UX architecture, brand design, accessibility and usability. WCAG 2.1 AA compliance built in from the start.",
       "metric": "Session duration more than doubled for RCPE",
-      "icon": "🎨"
+      "icon": "🎨",
+      "id": "wordpress",
+      "name": "Design & UX"
     },
     {
       "title": "Digital Marketing",
       "description": "SEO, Google Ads management, conversion rate optimisation, GA4 and GTM setup. White-label services for other agencies.",
       "metric": "299% increase in PPC conversions for Allegra Care",
-      "icon": "📈"
+      "icon": "📈",
+      "id": "marketing",
+      "name": "Digital Marketing"
     },
     {
       "title": "Support & Hosting",
       "description": "Ongoing support packages, Acquia hosting and penetration testing. We keep your site secure, fast and up to date.",
       "metric": "Bounce rates dropped 9% for RCPE after launch",
-      "icon": "🛡️"
+      "icon": "🛡️",
+      "id": "support",
+      "name": "Support & Hosting"
     },
     {
       "title": "AI Integration",
       "description": "AI-powered image categorisation, alt text generation, content management, rapid prototyping and SEO content strategy.",
       "metric": "20.4% user growth for Mayfield Villages",
-      "icon": "🤖"
+      "icon": "🤖",
+      "id": "ai-integration",
+      "name": "AI Integration"
     }
   ],
   "sectors": [
