@@ -12,6 +12,9 @@
     "address": "Frieze Farmhouse, Woodstock Road, Oxford, OX2 8JX"
   },
 
+  "headline": "We build experiences that matter",
+  "subheadline": "A UK-based agency that puts people first — solving real problems, unlocking business potential, and putting smiles on customers' faces since 1996.",
+
   "brand": {
     "primaryColor": "#e63946",
     "secondaryColor": "#1d3557",
@@ -20,62 +23,44 @@
     "tone": "professional-but-human"
   },
 
-  "services": {
-    "categories": [
-      {
-        "name": "Strategy & Consultation",
-        "services": [
-          "AI consultation",
-          "Launch accelerator",
-          "Audience research",
-          "Discovery sprints",
-          "Digital roadmap planning",
-          "Prototype design & development"
-        ]
-      },
-      {
-        "name": "Development",
-        "services": [
-          "Website development",
-          "E-commerce development",
-          "Mobile apps",
-          "Website migrations",
-          "Voice skills",
-          "Web applications"
-        ]
-      },
-      {
-        "name": "Design & UX",
-        "services": [
-          "Wireframing & design",
-          "UX architecture",
-          "Brand design",
-          "Accessibility and Usability",
-          "Web design sketch service"
-        ]
-      },
-      {
-        "name": "Digital Marketing",
-        "services": [
-          "Search Engine Optimisation (SEO)",
-          "Google Ads management (PPC)",
-          "Conversion Rate Optimisation (CRO)",
-          "GA4 & Google Tag Manager",
-          "White-label service for agencies"
-        ]
-      },
-      {
-        "name": "Support & Hosting",
-        "services": [
-          "Support packages",
-          "Acquia hosting",
-          "Penetration testing"
-        ]
-      }
-    ],
-    "description": "We love a design or technology challenge. Our team includes project management, design and UX, development, testing, ongoing support and hosting. We can focus in on a specific aspect of your project or support you across the whole project process. This might be helping you develop your initial idea, doing some user research, creating proof of concepts, or building a complex website with multiple layers of integrations.",
-    "differentiator": "Has your in house team or other partner agency struggled to keep up with your technical ambitions? You could find our innovative, agile and jargon-free process can help bring those ideas to life and deliver better results."
-  },
+  "features": [
+    {
+      "title": "Strategy & Consultation",
+      "description": "AI consultation, discovery sprints, digital roadmaps, audience research and prototype development. We help you figure out what to build before you build it.",
+      "metric": "183% enquiry increase for Guides for Brides",
+      "icon": "🧭"
+    },
+    {
+      "title": "Development",
+      "description": "Website development, e-commerce, mobile apps, migrations and web applications. Drupal specialists with WordPress and Acquia expertise.",
+      "metric": "Lighthouse targets of 90+ on key pages",
+      "icon": "⚙️"
+    },
+    {
+      "title": "Design & UX",
+      "description": "Wireframing, UX architecture, brand design, accessibility and usability. WCAG 2.1 AA compliance built in from the start.",
+      "metric": "Session duration more than doubled for RCPE",
+      "icon": "🎨"
+    },
+    {
+      "title": "Digital Marketing",
+      "description": "SEO, Google Ads management, conversion rate optimisation, GA4 and GTM setup. White-label services for other agencies.",
+      "metric": "299% increase in PPC conversions for Allegra Care",
+      "icon": "📈"
+    },
+    {
+      "title": "Support & Hosting",
+      "description": "Ongoing support packages, Acquia hosting and penetration testing. We keep your site secure, fast and up to date.",
+      "metric": "Bounce rates dropped 9% for RCPE after launch",
+      "icon": "🛡️"
+    },
+    {
+      "title": "AI Integration",
+      "description": "AI-powered image categorisation, alt text generation, content management, rapid prototyping and SEO content strategy.",
+      "metric": "20.4% user growth for Mayfield Villages",
+      "icon": "🤖"
+    }
+  ],
 
   "sectors": [
     "Higher education",
@@ -90,6 +75,44 @@
 
   "tech": ["Drupal", "WordPress", "Drupal Commerce", "Acquia Products"],
 
+  "pricing": {
+    "tiers": [
+      {
+        "name": "Support Package",
+        "price": 500,
+        "period": "month",
+        "description": "Ongoing maintenance, security updates, hosting and continuous improvement",
+        "features": ["Security updates", "Performance monitoring", "Content support", "Drupal/WP maintenance"],
+        "cta": "Get in touch"
+      },
+      {
+        "name": "Hackday",
+        "price": 900,
+        "period": "day",
+        "description": "A full day with our senior team focused on your biggest challenge",
+        "features": ["Senior-only team", "Strategy + development", "AI-augmented delivery", "Same-day outcomes"],
+        "cta": "Book a hackday",
+        "popular": true
+      },
+      {
+        "name": "Project",
+        "price": 15000,
+        "period": "project",
+        "description": "Full discovery, design and build for websites, apps and digital platforms",
+        "features": ["Discovery & strategy", "UX design & build", "Integrations", "Launch & support"],
+        "cta": "Start a project"
+      },
+      {
+        "name": "Retained Partner",
+        "price": 3000,
+        "period": "month",
+        "description": "Embedded in your team — strategy, development and marketing on demand",
+        "features": ["Dedicated team", "Weekly syncs", "Roadmap planning", "Priority support"],
+        "cta": "Become a partner"
+      }
+    ]
+  },
+
   "case_studies": [
     {
       "id": "rcpe",
@@ -99,7 +122,7 @@
       "challenge": "Existing Drupal 7 platform was technically outdated, difficult to manage, and falling short of user and internal team needs. Over 14,500 Fellows and Members in 100+ countries.",
       "solution": "Full design and build of new Drupal 10 website with DOX membership SSO, Moodle education platform integration, Eventbrite integration, modular accessible design system, and custom drag-and-drop page builder.",
       "results": "Average session duration more than doubled. Bounce rates dropped by 9%. Editorial efficiency improved greatly — content teams now work independently with far less need for technical support.",
-      "quote": "Thank you!! The website is great isn't it? Your team has been absolutely fabulous. It's going well and we've had some great feedback.",
+      "quote": "Thank you!! The website is great isn't it? Your team has been absolutely fabulous.",
       "quote_author": "Alex, RCPE",
       "tech": "Drupal 10, Acquia Drupal Cloud, DOX SSO, Moodle, Eventbrite, WCAG 2.1 AA, Lighthouse 90+"
     },
@@ -108,10 +131,10 @@
       "company": "Guides for Brides",
       "sector": "Venues & suppliers",
       "summary": "Designing for impact, with a 183% increase in enquiries",
-      "challenge": "Needed specialist skills (project management, marketing strategy, front-end development) without the overheads of growing their in-house team.",
-      "solution": "Visual refresh, reorganised navigation into user-focused 'buckets', improved search experience, prefilled enquiry messages, smart prompts for multiple enquiries, AI for image categorisation, alt text generation, and SEO content management.",
+      "challenge": "Needed specialist skills without the overheads of growing their in-house team.",
+      "solution": "Visual refresh, reorganised navigation, improved search, prefilled enquiry messages, AI for image categorisation and SEO content management.",
       "results": "183% increase in enquiries. Stronger value for listed venues. Solid case for enhanced listing packages.",
-      "quote": "Versantus has become an invaluable partner in our online success, ensuring our website remains competitive and delivers the best possible user experience. Their collaboration with our in-house developer allows us to leverage their expertise while maintaining flexibility and control.",
+      "quote": "Versantus has become an invaluable partner in our online success.",
       "quote_author": "Alison Hargreaves, CEO and founder of Guides for Brides",
       "tech": "Drupal, AI image categorisation, AI content management"
     },
@@ -120,10 +143,10 @@
       "company": "Mayfield Villages / Audley Group",
       "sector": "Lifestyle & luxury / Care",
       "summary": "How Drupal multisite powers Mayfield and Audley Villages",
-      "challenge": "New brand launch needed a website reflecting modern design, standing out from sector competitors, turning interest into leads, with total content editing control — while maximising existing investment in Audley Villages website.",
-      "solution": "Drupal multisite sharing features between Audley and Mayfield sites. Component-based page builder, Salesforce CRM integration, AI-based automatic image tagging for WCAG AA accessibility.",
-      "results": "20.4% growth in users after launch. Over 93% of users on top 5 pages triggered a conversion event or explored multiple pages.",
-      "quote": "Visually, this is the most impressive site we've built. It perfectly reflects the brand and experience, is fully responsive for mobile users, and has been one of the smoothest website launches.",
+      "challenge": "New brand launch needed a website that stands out, turns interest into leads, with total content editing control.",
+      "solution": "Drupal multisite sharing features between Audley and Mayfield sites. Component-based page builder, Salesforce CRM integration, AI-based automatic image tagging.",
+      "results": "20.4% growth in users after launch. Over 93% of users on top 5 pages triggered a conversion event.",
+      "quote": "Visually, this is the most impressive site we've built.",
       "quote_author": "Samantha Happe, Digital Marketing Manager at Audley Group",
       "tech": "Drupal 10 Multisite, Salesforce integration, AI image tagging"
     },
@@ -131,11 +154,11 @@
       "id": "osjct",
       "company": "The Orders of St John Care Trust",
       "sector": "Care industry",
-      "summary": "Driving new care enquiries and higher occupancy with a unified marketing, design and development approach",
-      "challenge": "60+ care homes across the UK. PPC campaigns had grown difficult to manage, mixing valuable enquiries with low-value interactions. Care home pages were clunky with two conflicting templates.",
-      "solution": "Rebuilt PPC campaigns around individual care homes. Redesigned care home search with improved filters and interactive maps. Flexible landing page components. Google Reviews, CQC reports integration. Found CRM and Mediahawk integration.",
+      "summary": "Driving new care enquiries and higher occupancy across 60+ care homes",
+      "challenge": "PPC campaigns had grown difficult to manage, mixing valuable enquiries with low-value interactions. Care home pages were clunky.",
+      "solution": "Rebuilt PPC campaigns. Redesigned care home search with improved filters and interactive maps. Google Reviews and CQC integration.",
       "results": "Higher relevance and value per enquiry. Cleaner performance data. Stronger confidence in ad spend ROI.",
-      "quote": "Their knowledge, responsiveness, and collaborative approach have made a real impact, both in our results and in how we manage digital marketing internally.",
+      "quote": "Their knowledge, responsiveness, and collaborative approach have made a real impact.",
       "quote_author": "William Beaumont-Oates, Digital Marketing Manager, OSJCT",
       "tech": "Drupal, Google Ads, GA4, GTM, Found CRM, Mediahawk"
     },
@@ -144,24 +167,12 @@
       "company": "Allegra Care",
       "sector": "Care industry",
       "summary": "Marketing exceptional care homes with PPC and SEO",
-      "challenge": "Needed to maximise digital marketing effectiveness and generate qualified leads for care home enquiries.",
-      "solution": "Tailored ad exposure to right people in right geographic locations. Clear CTAs, sticky mobile CTAs, keyword gap analyses, targeted content creation, Facebook Ads, Google Reviews management.",
-      "results": "299% increase in PPC conversions. Cost per conversion halved. 25% increase in contact conversions. Tracked keywords improved average of 5 places on Google.",
-      "quote": "The support from Versantus has exceeded my expectations, delivering results that have significantly boosted Allegra's online presence.",
+      "challenge": "Needed to maximise digital marketing effectiveness and generate qualified leads.",
+      "solution": "Tailored ad exposure, clear CTAs, sticky mobile CTAs, keyword gap analyses, targeted content creation.",
+      "results": "299% increase in PPC conversions. Cost per conversion halved. 25% increase in contact conversions.",
+      "quote": "The support from Versantus has exceeded my expectations.",
       "quote_author": "Sue Riches, Marketing Manager at Allegra Care",
       "tech": "Drupal, Google Ads, SEO, Facebook Ads"
-    },
-    {
-      "id": "ohm",
-      "company": "Oxfordshire Homeless Movement",
-      "sector": "Charity & not for profit",
-      "summary": "Empowering OHM's women's campaign with impactful design",
-      "challenge": "Needed impactful digital presence for women's campaign.",
-      "solution": "Campaign-focused design and development.",
-      "results": "Impactful campaign delivery.",
-      "quote": null,
-      "quote_author": null,
-      "tech": "Drupal"
     }
   ],
 
@@ -210,18 +221,31 @@
   ],
 
   "trust": {
+    "sites_built": 200,
+    "years_experience": 30,
+    "customer_count": 150,
+    "industries": [
+      "Higher education",
+      "Care industry",
+      "Venues & suppliers",
+      "Charity & not for profit",
+      "Research institutes",
+      "Lifestyle & luxury",
+      "Ambitious startups",
+      "Membership organisations"
+    ],
+    "certifications": ["Acquia Partner", "Drupal Association"],
+    "partners": ["Acquia"],
+    "location": "Oxford, UK",
+    "since": "1996",
     "metrics": {
       "enquiry_increase_gfb": "183%",
       "ppc_conversion_increase_allegra": "299%",
       "user_growth_mayfield": "20.4%",
       "bounce_rate_drop_rcpe": "9%",
       "conversion_cost_reduction_allegra": "50%",
-      "keyword_improvement_allegra": "5 places average",
       "session_duration_increase_rcpe": "2x"
-    },
-    "partners": ["Acquia"],
-    "location": "Oxford, UK",
-    "since": "1996"
+    }
   },
 
   "faq": [
@@ -247,11 +271,11 @@
     },
     {
       "q": "How do you use AI in your work?",
-      "a": "We use AI for image categorisation, alt text generation, content management, rapid prototyping, and SEO content strategy. We also offer AI consultation services to help organisations adopt AI effectively."
+      "a": "We use AI for image categorisation, alt text generation, content management, rapid prototyping, and SEO content strategy. We also offer AI consultation services."
     },
     {
       "q": "Can you work alongside our existing team?",
-      "a": "Absolutely. We regularly augment in-house teams with specialist skills like project management, marketing strategy, and front-end development — scaling up and down as needed without the cost of permanent hires."
+      "a": "Absolutely. We regularly augment in-house teams with specialist skills — scaling up and down as needed without the cost of permanent hires."
     }
   ]
 }
