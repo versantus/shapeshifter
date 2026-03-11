@@ -2053,6 +2053,8 @@ async function init() {
 
   if (!PRODUCT) return;
 
+  try {
+
   // Split view mode
   if (SPLIT) {
     const keys = SPLIT.split(',').slice(0, 3);
@@ -2112,6 +2114,11 @@ async function init() {
       updateDebugPanel(personaEngine.persona, collector.signals, blockOrder, mutationEngine._log);
     }
   }, 2000);
+
+  } catch(err) {
+    console.error('Shapeshifter init error:', err);
+    document.getElementById('app').innerHTML = '<div style="color:#ef4444;padding:40px;font-family:monospace;white-space:pre-wrap">Error: ' + err.message + '\n\n' + err.stack + '</div>';
+  }
 }
 
 // Boot
